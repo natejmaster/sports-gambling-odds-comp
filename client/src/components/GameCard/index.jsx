@@ -1,98 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 
-const GameCard = ({ homeTeam, awayTeam, bookmakers }) => {
-  const [bestOdds, setBestOdds] = useState(null);
-
-  useEffect(() => {
-    const fetchOddsData = async () => {
-      try {
-        const response = await axios.get('/api/nfl-odds');
-        setBestOdds(findBestOdds(response.data));
-      } catch (error) {
-        console.error('Error fetching NFL odds:', error);
-      }
-    };
-
-    fetchOddsData();
-  }, []); // Run this effect only once when the component mounts
-
-  // Function to find the best odds for each category
-  const findBestOdds = (oddsData) => {
-    const bestOdds = {
-      pointSpreadTeam1: null,
-      pointSpreadTeam2: null,
-      over: null,
-      under: null,
-      moneylineTeam1: null,
-      moneylineTeam2: null,
-    };
-
-    // Loop through bookmakers
-    bookmakers.forEach((bookmaker) => {
-      // Loop through markets
-      bookmaker.markets.forEach((market) => {
-        switch (market.key) {
-          case 'h2h':
-            // Loop through outcomes
-            market.outcomes.forEach((outcome) => {
-              if (outcome.name === homeTeam && (bestOdds.moneylineTeam1 === null || outcome.price > bestOdds.moneylineTeam1)) {
-                bestOdds.moneylineTeam1 = outcome.price;
-              } else if (outcome.name === awayTeam && (bestOdds.moneylineTeam2 === null || outcome.price > bestOdds.moneylineTeam2)) {
-                bestOdds.moneylineTeam2 = outcome.price;
-              }
-            });
-            break;
-          case 'spreads':
-            // Loop through outcomes
-            market.outcomes.forEach((outcome) => {
-              if (outcome.name === homeTeam && (bestOdds.pointSpreadTeam1 === null || outcome.price > bestOdds.pointSpreadTeam1)) {
-                bestOdds.pointSpreadTeam1 = outcome.price;
-              } else if (outcome.name === awayTeam && (bestOdds.pointSpreadTeam2 === null || outcome.price > bestOdds.pointSpreadTeam2)) {
-                bestOdds.pointSpreadTeam2 = outcome.price;
-              }
-            });
-            break;
-          case 'totals':
-            // Loop through outcomes
-            market.outcomes.forEach((outcome) => {
-              if (outcome.name === 'Over' && (bestOdds.over === null || outcome.price > bestOdds.over)) {
-                bestOdds.over = outcome.price;
-              } else if (outcome.name === 'Under' && (bestOdds.under === null || outcome.price > bestOdds.under)) {
-                bestOdds.under = outcome.price;
-              }
-            });
-            break;
-          default:
-            break;
-        }
-      });
-    });
-
-    return bestOdds;
-  };
-
+const GameCard = () => {
   return (
     <div className="game-card">
-      <div className="teams">
-        <span>{awayTeam}</span>
-        <span>@</span>
-        <span>{homeTeam}</span>
-      </div>
-      <div className="best-odds">
-        {bestOdds ? (
-          <div>
-            <p>Best Point Spread {awayTeam}: {bestOdds.pointSpreadTeam2}</p>
-            <p>Best Point Spread {homeTeam}: {bestOdds.pointSpreadTeam1}</p>
-            <p>Best Over: {bestOdds.over}</p>
-            <p>Best Under: {bestOdds.under}</p>
-            <p>Best Moneyline {awayTeam}: {bestOdds.moneylineTeam2}</p>
-            <p>Best Moneyline {homeTeam}: {bestOdds.moneylineTeam1}</p>
-          </div>
-        ) : (
-          <p>Loading odds data...</p>
-        )}
-      </div>
+      <iframe
+        title="Sports Odds Widget"
+        style={{ width: '20rem', height: '25rem', border: '1px solid black' }}
+        src="https://widget.the-odds-api.com/v1/sports/americanfootball_nfl/events/?accessKey=wk_e329ab8c41b396a42de220849be3cbe9&bookmakerKeys=draftkings&oddsFormat=american&markets=h2h%2Cspreads%2Ctotals&marketNames=h2h%3AMoneyline%2Cspreads%3ASpreads%2Ctotals%3AOver%2FUnder"
+      ></iframe>
     </div>
   );
 };
