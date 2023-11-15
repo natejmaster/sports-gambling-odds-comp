@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.royalBlue-Bg {
+  background-color: #050E44;
+}
+.gold {
+    color: #F8D03E;
+}
+
+.lightGrey-bg {
+    background-color: #E9E4DC;
+}
+
+.blue-bg {
+    background-color: #143189;
+}
