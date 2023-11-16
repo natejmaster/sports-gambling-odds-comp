@@ -1,5 +1,5 @@
 import kurtWarnerimg from '../assets/images/kurtwarner.png'
-import GameCard from '../components/GameCard'
+import GameCards from '../components/GameCards'
 export default function Home () {
     return (
         <>       
@@ -11,7 +11,7 @@ export default function Home () {
        </section>
        <section>
 
-       <GameCard />
+       <GameCards />
   
         </section>
     </>
