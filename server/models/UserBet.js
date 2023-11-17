@@ -23,3 +23,8 @@ const UserStatisticsSchema = new mongoose.Schema({
         default: 0,
     },
 });
+
+const UserStatistics = mongoose.model('UserStatistics', UserStatisticsSchema);
+
+// Exporting UserStatisticsSchema to be used in other parts of our code.
+module.exports = UserStatistics;
