@@ -1,44 +1,45 @@
 // import { useState } from 'react';
 // import { useMutation } from '@apollo/client';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 // import { LOGIN } from '../utils/mutations';
 // import Auth from '../utils/auth';
 
 function Login(props) {
-//   const [formState, setFormState] = useState({ email: '', password: '' });
-//   const [login, { error }] = useMutation(LOGIN);
+  //   const [formState, setFormState] = useState({ email: '', password: '' });
+  //   const [login, { error }] = useMutation(LOGIN);
 
-//   const handleFormSubmit = async (event) => {
-//     event.preventDefault();
-//     try {
-//       const mutationResponse = await login({
-//         variables: { email: formState.email, password: formState.password },
-//       });
-//       const token = mutationResponse.data.login.token;
-//       Auth.login(token);
-//     } catch (e) {
-//       console.log(e);
-//     }
-//   };
+  //   const handleFormSubmit = async (event) => {
+  //     event.preventDefault();
+  //     try {
+  //       const mutationResponse = await login({
+  //         variables: { email: formState.email, password: formState.password },
+  //       });
+  //       const token = mutationResponse.data.login.token;
+  //       Auth.login(token);
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   };
 
-//   const handleChange = (event) => {
-//     const { name, value } = event.target;
-//     setFormState({
-//       ...formState,
-//       [name]: value,
-//     });
-//   };
+  //   const handleChange = (event) => {
+  //     const { name, value } = event.target;
+  //     setFormState({
+  //       ...formState,
+  //       [name]: value,
+  //     });
+  //   };
 
   return (
-    <div className="">
-      <Link to="/signup">← Go to Signup</Link>
-
-      <h2>Login</h2>
-      <form >
-      {/* onSubmit={handleFormSubmit} */}
-        <div className="">
-          <label htmlFor="email">Email address:</label>
+    <div className="flex flex-col justify-center items-center mt-5 pb-56">
+      <form className="flex flex-col justify-center items-center white-bg rounded-xl border-royalBlue w-11/12 lg:w-7/12 shadow-xl mb-4">
+        {/* onSubmit={handleFormSubmit} */}
+        <h2 className="text-3xl heading text text-center mt-2">Login</h2>
+        <div className="flex flex-col  lg:w-7/12">
+          <label className="royalBlue" htmlFor="email">
+            Email address:
+          </label>
           <input
+            className="p-2 rounded-xl mb-3 border-inputGold shadow-xl"
             placeholder="youremail@test.com"
             name="email"
             type="email"
@@ -46,9 +47,12 @@ function Login(props) {
             // onChange={handleChange}
           />
         </div>
-        <div className="">
-          <label htmlFor="pwd">Password:</label>
+        <div className="flex flex-col lg:w-7/12">
+          <label className="royalBlue" htmlFor="pwd">
+            Password:
+          </label>
           <input
+            className="p-2 rounded-xl mb-3 border-inputGold shadow-xl"
             placeholder="******"
             name="password"
             type="password"
@@ -61,10 +65,17 @@ function Login(props) {
             <p className="">The provided credentials are incorrect</p>
           </div>
         ) : null} */}
-        <div className="">
-          <button type="submit">Submit</button>
-        </div>
+
+        <button
+          className="gold-bg py-2 mt-2  px-4 rounded-xl royalBlue mybtn mb-7 font-bold text-xl shadow-xl"
+          type="submit"
+        >
+          Submit
+        </button>
       </form>
+      <Link className="text-xl royalBlue underline" to="/signup">
+        ← Go to Signup
+      </Link>
     </div>
   );
 }

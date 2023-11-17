@@ -4,21 +4,18 @@ import Footer from "./components/Footer";
 // import axios from 'axios';
 import { Outlet } from "react-router-dom";
 
-
 const App = () => {
-
   return (
     <>
-    <div className="lightGrey-bg flex flex-col min-h-screen">
-   <Header />
+      <div className="lightGrey-bg flex flex-col min-h-screen">
+        <Header />
 
-<Outlet />
+        <Outlet />
 
-    <Footer />
-    </div>
+        <Footer />
+      </div>
     </>
-  )
-}
-    
+  );
+};
 
 export default App;
