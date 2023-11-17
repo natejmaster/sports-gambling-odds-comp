@@ -7,7 +7,9 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import User from "./pages/User";
+import ScoreBoard from "./pages/ScoreBoard.jsx";
 
+// Create React Router
 const router = createBrowserRouter([
   {
     path: "/",
@@ -28,7 +30,11 @@ const router = createBrowserRouter([
       {
         path: "user",
         element: <User />,
-      }
+      },
+      {
+        path: "scoreboard",
+        element: <ScoreBoard />,
+      },
     ],
   },
 ]);

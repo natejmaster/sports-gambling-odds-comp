@@ -9,13 +9,18 @@
 .gold {
   color: #f8d03e;
 }
-
+.red-bg {
+  background-color: #BD6B57;
+}
 .royalBlue {
   color: #050e44;
 }
 
 .lightGrey-bg {
   background-color: #e9e4dc;
+}
+.grey-bg {
+  background-color: #c9c9c9;
 }
 
 .blue-bg {
