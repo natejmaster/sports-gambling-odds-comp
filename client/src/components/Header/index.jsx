@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
+import NavTabs from "../Navtabs";
 export default function Header() {
   return (
     <>
-      <header className="royalBlue-Bg py-4">
+      <header className="royalBlue-Bg pt-4">
         <h1 className="text-4xl text-center gold textshadowWhite">
-          Better's Bible
+          Bettor's Bible
         </h1>
         <nav className="flex justify-end">
           <Link to="/login" className="linkGold underline px-4">
@@ -14,6 +15,7 @@ export default function Header() {
             Signup
           </Link>
         </nav>
+      <NavTabs />
       </header>
     </>
   );
