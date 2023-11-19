@@ -1,5 +1,5 @@
 import kurtWarnerimg from "../assets/images/kurtwarner.png";
-import GameCards from "../components/GameCards";
+import GameCards from "../components/GameCards/index";
 export default function Home() {
   return (
     <>
