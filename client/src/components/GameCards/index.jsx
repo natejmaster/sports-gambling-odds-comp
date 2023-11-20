@@ -1,34 +1,33 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-export default function GameCards() {
-  const [gameData, setGameData] = useState([]);
+const MatchupsComponent = () => {
+  const [matchups, setMatchups] = useState([]);
 
   useEffect(() => {
+    // Fetch matchups data from the API
     const fetchData = async () => {
       try {
-        const response = await axios.get('/api/bovada-data');
-        console.log(response.data);
-        setGameData(response.data);
+        const response = await axios.get('http://localhost:3001/api/simplified-bovada-data');
+        setMatchups(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
     fetchData();
-  }, []); // Run this effect only once when the component mounts
+  }, []); // Empty dependency array to run the effect only once
 
   return (
-    <div className="app">
-      <h1>NFL Game Odds</h1>
-      <div className="game-cards">
-        {gameData.map((game, index) => (
-          <div key={index}>
-            <p>Description: {game.description}</p>
-            {/* Include other data as needed */}
-          </div>
+    <div>
+      <h2>Matchups</h2>
+      <ul>
+        {matchups.map((matchup, index) => (
+          <li key={index}>{matchup.matchup}</li>
         ))}
-      </div>
+      </ul>
     </div>
   );
-}
+};
+
+export default MatchupsComponent;
