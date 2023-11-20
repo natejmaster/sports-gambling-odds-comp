@@ -3,7 +3,7 @@ const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const path = require('path');
 const axios = require('axios');
-const cors = require('cors'); // Import the cors package
+const cors = require('cors');
 
 // const { typeDefs, resolvers } = require('./schemas'); //
 const db = require('./config/connection');
@@ -49,17 +49,17 @@ const startApolloServer = async () => {
         const pointSpreadIndex = findMarketIndex('Point Spread');
   
         // Extracting data for the underdog
-        const underdogOutcome = event.displayGroups[0]?.markets[pointSpreadIndex]?.outcomes[0];
-        const underdog = {
-          name: underdogOutcome?.description,
-          pointSpread: underdogOutcome?.price?.handicap,
+        const awayTeamOutcome = event.displayGroups[0]?.markets[pointSpreadIndex]?.outcomes[0];
+        const awayTeam = {
+          name: awayTeamOutcome?.description,
+          pointSpread: awayTeamOutcome?.price?.handicap,
         };
   
         // Extracting data for the favorite
-        const favoriteOutcome = event.displayGroups[0]?.markets[pointSpreadIndex]?.outcomes[1];
-        const favorite = {
-          name: favoriteOutcome?.description,
-          pointSpread: favoriteOutcome?.price?.handicap,
+        const homeTeamOutcome = event.displayGroups[0]?.markets[pointSpreadIndex]?.outcomes[1];
+        const homeTeam = {
+          name: homeTeamOutcome?.description,
+          pointSpread: homeTeamOutcome?.price?.handicap,
         };
   
         // Find the index of the over/under total market
@@ -71,8 +71,8 @@ const startApolloServer = async () => {
   
         return {
           matchup: event.description,
-          underdog,
-          favorite,
+          awayTeam,
+          homeTeam,
           totalScore,
         };
       });
