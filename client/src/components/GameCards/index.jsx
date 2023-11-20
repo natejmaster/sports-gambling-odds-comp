@@ -18,14 +18,28 @@ const MatchupsComponent = () => {
     fetchData();
   }, []); // Empty dependency array to run the effect only once
 
+  const renderMatchupButtons = (matchup) => (
+    <div>
+      <button>
+        {`${matchup.awayTeam.name} ${matchup.awayTeam.pointSpread > 0 ? `+${matchup.awayTeam.pointSpread}` : matchup.awayTeam.pointSpread}`}
+      </button>
+      <button>
+        {`${matchup.homeTeam.name} ${matchup.homeTeam.pointSpread > 0 ? `+${matchup.homeTeam.pointSpread}` : matchup.homeTeam.pointSpread}`}
+      </button>
+      <button>{`Over ${matchup.totalScore}`}</button>
+      <button>{`Under ${matchup.totalScore}`}</button>
+    </div>
+  );
+
   return (
     <div>
       <h2>Matchups</h2>
-      <ul>
-        {matchups.map((matchup, index) => (
-          <li key={index}>{matchup.matchup}</li>
-        ))}
-      </ul>
+      {matchups.map((matchup, index) => (
+        <div key={index}>
+          <p>{matchup.matchup}</p>
+          {renderMatchupButtons(matchup)}
+        </div>
+      ))}
     </div>
   );
 };
