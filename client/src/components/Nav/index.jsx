@@ -1,9 +1,18 @@
 import { Link } from "react-router-dom";
 import Auth from "../../utils/auth";
+import Swal from "sweetalert2";
 export default function Nav() {
   const logout = (event) => {
     event.preventDefault();
-    Auth.logout();
+    Swal.fire({
+      title: "Success!",
+      text: "You have successfully logged out.",
+      icon: "success",
+      confirmButtonColor: "#050e44",
+    });
+    setTimeout(() => {
+      Auth.logout();
+    }, 2000);
   };
   return (
     <nav className="flex justify-end">

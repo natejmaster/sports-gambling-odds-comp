@@ -9,7 +9,7 @@ export default function NavTab({ links, activeLink, onLinkClick }) {
                             className={
                                 link.to === activeLink
                                     ? "red-bg round-top-corners mx-1 px-3 lg:text-xl lg:mx-3 underline"
-                                    : "lightGrey-bg round-top-corners mx-1 px-3   lg:text-xl lg:mx-3 underline"
+                                    : "tabs round-top-corners mx-1 px-3   lg:text-xl lg:mx-3 underline"
                             }
                             key={link.key}
                         >
