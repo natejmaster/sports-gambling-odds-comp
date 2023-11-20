@@ -19,9 +19,7 @@
 .lightGrey-bg {
   background-color: #e9e4dc;
 }
-.grey-bg {
-  background-color: #c9c9c9;
-}
+
 
 .blue-bg {
   background-color: #143189;
@@ -71,7 +69,12 @@
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 } 
-
+.tabs{
+  background-color: #e9e4dc;
+}
+.tabs:hover{
+  background-color: #BD6B57;
+}
 @media (min-width: 1024px) {
   .borderLeft-royalBlue {
     border-left: 4px double #050e44;

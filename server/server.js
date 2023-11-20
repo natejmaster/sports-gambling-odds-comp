@@ -4,25 +4,28 @@ const { expressMiddleware } = require('@apollo/server/express4');
 const path = require('path');
 const axios = require('axios');
 const cors = require('cors');
+const { authMiddleware } = require('./utils/auth');
 
-// const { typeDefs, resolvers } = require('./schemas'); //
+const { typeDefs, resolvers } = require('./schemas'); //
 const db = require('./config/connection');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
-// const server = new ApolloServer({ //
-//   typeDefs,
-//   resolvers,
-// });
+const server = new ApolloServer({ //
+  typeDefs,
+  resolvers,
+});
 
 const startApolloServer = async () => {
-  // await server.start(); //
+  await server.start(); 
 
   app.use(cors()); // Enable CORS for all routes
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
 
-  // app.use('/graphql', expressMiddleware(server)); //
+  app.use('/graphql', expressMiddleware(server, {
+    context: authMiddleware
+  }));
 
   //
   app.get('/api/bovada-data', async (req, res) => {

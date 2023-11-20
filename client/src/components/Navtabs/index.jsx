@@ -9,7 +9,7 @@ export default function NavTabs() {
     const links = [
         {key: 1, to: '/', label: 'Home'},
         {key: 2, to: '/user', label: 'User'},
-        {key: 3, to : '/scoreboard', label: 'ScoreBoard'},
+        {key: 3, to : '/scoreboard', label: 'Scoreboard'},
     
     ];
 
