@@ -6,20 +6,22 @@ const axios = require('axios');
 const cors = require('cors');
 const { authMiddleware } = require('./utils/auth');
 
-const { typeDefs, resolvers } = require('./schemas'); //
+const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
-const server = new ApolloServer({ //
+const server = new ApolloServer({
   typeDefs,
   resolvers,
 });
 
-const startApolloServer = async () => {
-  await server.start(); 
+let backupData = null; // Variable to store backup data
 
-  app.use(cors()); // Enable CORS for all routes
+const startApolloServer = async () => {
+  await server.start();
+
+  app.use(cors());
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
 
@@ -27,7 +29,6 @@ const startApolloServer = async () => {
     context: authMiddleware
   }));
 
-  //
   app.get('/api/bovada-data', async (req, res) => {
     try {
       const response = await axios.get('https://www.bovada.lv/services/sports/event/v2/events/A/description/football/nfl');
@@ -37,60 +38,53 @@ const startApolloServer = async () => {
     }
   });
 
-  // New route for fetching NFL odds data
   app.get('/api/simplified-bovada-data', async (req, res) => {
     try {
       const response = await axios.get('https://www.bovada.lv/services/sports/event/v2/events/A/description/football/nfl');
   
-      // Extracting detailed information for each event
       const simplifiedData = response.data[0]?.events.map((event) => {
-        // Extracting startTime property
         const startTime = event.startTime;
-
-        // Calculate endTime (startTime + 5 hours)
         const endTime = startTime + (5 * 60 * 60 * 1000);
-
-        // Find the index of the desired market data by description
+        
         const findMarketIndex = (description) =>
           event.displayGroups[0]?.markets.findIndex((market) => market.description === description);
-  
-        // Find the index of the point spread market
+
         const pointSpreadIndex = findMarketIndex('Point Spread');
-  
-        // Extracting data for the underdog
         const awayTeamOutcome = event.displayGroups[0]?.markets[pointSpreadIndex]?.outcomes[0];
         const awayTeam = {
           name: awayTeamOutcome?.description,
           pointSpread: awayTeamOutcome?.price?.handicap,
         };
-  
-        // Extracting data for the favorite
+
         const homeTeamOutcome = event.displayGroups[0]?.markets[pointSpreadIndex]?.outcomes[1];
         const homeTeam = {
           name: homeTeamOutcome?.description,
           pointSpread: homeTeamOutcome?.price?.handicap,
         };
-  
-        // Find the index of the over/under total market
+
         const totalIndex = findMarketIndex('Total');
-  
-        // Extracting the total score
         const totalScoreOutcome = event.displayGroups[0]?.markets[totalIndex]?.outcomes[0];
         const totalScore = totalScoreOutcome?.price?.handicap;
-  
+        
         return {
           matchup: event.description,
           awayTeam,
           homeTeam,
           totalScore,
           startTime,
-          endTime, // Include the endTime property
+          endTime,
         };
       });
-  
-      console.log('Simplified Data:', simplifiedData);
-  
-      res.json(simplifiedData);
+
+      if (simplifiedData && simplifiedData.length > 0) {
+        backupData = simplifiedData; // Update backupData if response isn't empty
+      }
+
+      if ((!simplifiedData || simplifiedData.length === 0) && backupData) {
+        res.json(backupData); // Use backupData if response is empty
+      } else {
+        res.json(simplifiedData);
+      }
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -100,32 +94,18 @@ const startApolloServer = async () => {
   app.get('/api/results-data', async (req, res) => {
     try {
       const response = await axios.get('https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard');
-  
-      // Extracting relevant data for each game
       const gamesData = response.data?.events.map((event) => {
-        const competitors = event?.competitions[0]?.competitors;
-        const scores = competitors.map((competitor) => ({
-          team: competitor.team.displayName,
-          score: competitor.score,
-        }));
-        
-        return {
-          matchup: event.name,
-          scores,
-        };
+        /* Extracting relevant data for each game */
       });
-  
       res.json(gamesData);
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
-  
-  // if we're in production, serve client/dist as static assets
+
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/dist')));
-
     app.get('*', (req, res) => {
       res.sendFile(path.join(__dirname, '../client/dist/index.html'));
     });
@@ -134,7 +114,6 @@ const startApolloServer = async () => {
   db.once('open', () => {
     app.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);
-      // console.log(`Use GraphQL at http://localhost:${PORT}/graphql`); //
     });
   });
 };
