@@ -8,7 +8,7 @@ export default function NavTabs() {
 // links to be displayed in Navbar
     const links = [
         {key: 1, to: '/', label: 'Home'},
-        {key: 2, to: '/user', label: 'User'},
+        {key: 2, to: '/betpage', label: 'Betpage'},
         {key: 3, to : '/scoreboard', label: 'Scoreboard'},
     
     ];

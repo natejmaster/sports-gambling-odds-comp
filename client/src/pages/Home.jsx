@@ -1,9 +1,9 @@
 import kurtWarnerimg from "../assets/images/kurtwarner.png";
-import GameCards from "../components/GameCards/index";
+// import GameCards from "../components/GameCards/index";
 export default function Home() {
   return (
     <>
-      <section className="flex flex-col white-bg mt-4 mx-5 rounded-xl border-royalBlue lg:flex-row">
+      <section className="flex flex-col  white-bg mx-5 mt-16 rounded-xl border-royalBlue lg:flex-row mb-48">
         <img
           className="h-80  m-auto my-4 rounded-xl shadow-xl lg:m-4"
           src={kurtWarnerimg}
@@ -30,7 +30,6 @@ export default function Home() {
         </div>
       </section>
       <section>
-        <GameCards />
       </section>
     </>
   );
