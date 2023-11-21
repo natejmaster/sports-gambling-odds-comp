@@ -44,6 +44,12 @@ const startApolloServer = async () => {
   
       // Extracting detailed information for each event
       const simplifiedData = response.data[0]?.events.map((event) => {
+        // Extracting startTime property
+        const startTime = event.startTime;
+
+        // Calculate endTime (startTime + 5 hours)
+        const endTime = startTime + (5 * 60 * 60 * 1000);
+
         // Find the index of the desired market data by description
         const findMarketIndex = (description) =>
           event.displayGroups[0]?.markets.findIndex((market) => market.description === description);
@@ -77,6 +83,8 @@ const startApolloServer = async () => {
           awayTeam,
           homeTeam,
           totalScore,
+          startTime,
+          endTime, // Include the endTime property
         };
       });
   
