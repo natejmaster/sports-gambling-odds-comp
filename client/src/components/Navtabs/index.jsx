@@ -1,18 +1,21 @@
 import {useState} from 'react';
 import NavTab from '../Navtab';
+import Auth from '../../utils/auth';
 
 // function to create Navbar
 export default function NavTabs() {
     // useState hook to set active link; default is home
     const [activeLink, setActiveLink] = useState('/');
 // links to be displayed in Navbar
-    const links = [
-        {key: 1, to: '/', label: 'Home'},
-        {key: 2, to: '/betpage', label: 'Betpage'},
-        {key: 3, to : '/scoreboard', label: 'Scoreboard'},
-    
-    ];
+ const homeLink = {
+    key: 1,
+        to: '/',
+        label: 'Home'
+    };
 
+    const links = Auth.loggedIn() ? [homeLink, { key: 2, to: '/betpage', label: 'Place Bets!' }, { key: 3, to: '/scoreboard', label: 'Scoreboard' }] : [homeLink];
+
+ 
     const handleLinkClick = (to) => {
         setActiveLink(to);
     };
