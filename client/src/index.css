@@ -36,8 +36,9 @@
 .border-royalBlue {
   border: 4px solid #050e44;
 }
-.border-blue {
-  border: 1px solid #143189;
+.border-royalBlueThin {
+  border: 1px solid #050e44;
+
 }
 .borderLeft-royalBlue {
   border-left: none;

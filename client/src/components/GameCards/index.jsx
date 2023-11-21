@@ -34,23 +34,23 @@ const GameCards = () => {
 
     return (
       <tr key={matchup.matchup}>
-        <td>{formattedStartTime}</td>
-        <td>{matchup.matchup}</td>
-        <td>
-          <button>
+        <td className='border-royalBlueThin'>{formattedStartTime}</td>
+        <td className='border-royalBlueThin'>{matchup.matchup}</td>
+        <td className='border-royalBlueThin'>
+          <button className='mybtn p-1 rounded'>
             {`${matchup.awayTeam.name} ${matchup.awayTeam.pointSpread > 0 ? `+${matchup.awayTeam.pointSpread}` : matchup.awayTeam.pointSpread}`}
           </button>
         </td>
-        <td>
-          <button>
+        <td className='border-royalBlueThin'>
+          <button className='mybtn p-1 rounded'>
             {`${matchup.homeTeam.name} ${matchup.homeTeam.pointSpread > 0 ? `+${matchup.homeTeam.pointSpread}` : matchup.homeTeam.pointSpread}`}
           </button>
         </td>
-        <td>
-          <button>{`Over ${matchup.totalScore}`}</button>
+        <td className='border-royalBlueThin'>
+          <button className='mybtn p-1 rounded'>{`Over ${matchup.totalScore}`}</button>
         </td>
-        <td>
-          <button>{`Under ${matchup.totalScore}`}</button>
+        <td className='border-royalBlueThin'>
+          <button className='mybtn p-1 rounded'>{`Under ${matchup.totalScore}`}</button>
         </td>
       </tr>
     );
@@ -62,20 +62,12 @@ const GameCards = () => {
       <table>
         <thead>
           <tr>
-<<<<<<< HEAD
-            <th className="text-lg royalBlue">Matchup</th>
-            <th className="text-lg royalBlue">Away Team</th>
-            <th className="text-lg royalBlue">Home Team</th>
-            <th className="text-lg royalBlue">Over</th>
-            <th className="text-lg royalBlue">Under</th>
-=======
-            <th>Start Time (CT)</th>
-            <th>Matchup</th>
-            <th>Away Team</th>
-            <th>Home Team</th>
-            <th>Over</th>
-            <th>Under</th>
->>>>>>> main
+            <th className='royalBlue'>Start Time (CT)</th>
+            <th className='royalBlue'>Matchup</th>
+            <th className='royalBlue'>Away</th>
+            <th className='royalBlue'>Home</th>
+            <th className='royalBlue'>Over</th>
+            <th className='royalBlue'>Under</th>
           </tr>
         </thead>
         <tbody>
