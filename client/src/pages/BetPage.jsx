@@ -59,10 +59,10 @@ const BetPage = () => {
     <tr key={matchup.matchup} className="border-royalBlueTop">
       <td className="text-sm font-bold royalBlue">{matchup.matchup}</td>
       <td>
-        <div className="dropdown mb-4">
+        <div className="dropdown mb-4 flex ml-1">
           <button
             tabIndex={0}
-            className="gold-bg mt-12 px-2 rounded-xl royalBlue mybtn mb-7  shadow-xl w-full text-sm lg:text-md"
+            className="gold-bg mt-12 px-2 h-16 rounded-xl royalBlue mybtn mb-7  shadow-xl w-full text-sm font-bold lg:text-md"
           >
             {" "}
             {`${matchup.awayTeam.name} ${
@@ -82,10 +82,10 @@ const BetPage = () => {
         </div>
       </td>
       <td>
-        <div className="dropdown mb-4">
+        <div className="dropdown mb-4 flex ml-1">
           <button
             tabIndex={0}
-            className="gold-bg mt-12 px-2 rounded-xl royalBlue mybtn mb-7  shadow-xl w-full text-sm lg:text-md"
+            className="gold-bg mt-12 px-2 h-16 rounded-xl royalBlue mybtn mb-7  shadow-xl w-full text-sm font-bold lg:text-md"
           >
             {" "}
             {`${matchup.homeTeam.name} ${
@@ -105,10 +105,10 @@ const BetPage = () => {
         </div>
       </td>
       <td>
-        <div className="dropdown mb-4">
+        <div className="dropdown mb-4 flex ml-1">
           <button
             tabIndex={0}
-            className="gold-bg mt-12 px-2 rounded-xl royalBlue mybtn mb-7  shadow-xl w-full text-sm lg:text-md"
+            className="gold-bg mt-12 px-2 h-16 rounded-xl royalBlue mybtn mb-7  shadow-xl w-full text-sm font-bold lg:text-md"
           >{`Over ${matchup.totalScore}`}</button>
           <ul
             tabIndex={0}
@@ -121,10 +121,10 @@ const BetPage = () => {
         </div>
       </td>
       <td>
-        <div className="dropdown mb-4">
+        <div className="dropdown mb-4 flex ml-1">
           <button
             tabIndex={0}
-            className="gold-bg mt-12 px-2 rounded-xl royalBlue mybtn mb-7  shadow-xl w-full text-sm lg:text-md"
+            className="gold-bg mt-12 px-2 h-16 rounded-xl royalBlue mybtn mb-7  shadow-xl w-full text-sm font-bold lg:text-md"
           >{`Under ${matchup.totalScore}`}</button>
           <ul
             tabIndex={0}
@@ -145,7 +145,7 @@ const BetPage = () => {
 
       <table>
         <thead>
-          <tr>
+          <tr className="">
             <th className="royalBlue">Matchup</th>
             <th className="royalBlue">Away</th>
             <th className="royalBlue">Home</th>
