@@ -96,6 +96,31 @@ const startApolloServer = async () => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
+
+  app.get('/api/results-data', async (req, res) => {
+    try {
+      const response = await axios.get('https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard');
+  
+      // Extracting relevant data for each game
+      const gamesData = response.data?.events.map((event) => {
+        const competitors = event?.competitions[0]?.competitors;
+        const scores = competitors.map((competitor) => ({
+          team: competitor.team.displayName,
+          score: competitor.score,
+        }));
+        
+        return {
+          matchup: event.name,
+          scores,
+        };
+      });
+  
+      res.json(gamesData);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
   
   // if we're in production, serve client/dist as static assets
   if (process.env.NODE_ENV === 'production') {
