@@ -73,7 +73,7 @@ const BetPage = () => {
           </button>
           <ul
             tabIndex={0}
-            className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+            className="dropdown-content mt-12 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
           >
             {renderDropdown([
               1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 100,
@@ -96,7 +96,7 @@ const BetPage = () => {
           </button>
           <ul
             tabIndex={0}
-            className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+            className="dropdown-content mt-12 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
           >
             {renderDropdown([
               1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 100,
@@ -112,7 +112,7 @@ const BetPage = () => {
           >{`Over ${matchup.totalScore}`}</button>
           <ul
             tabIndex={0}
-            className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+            className="dropdown-content mt-12 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
           >
             {renderDropdown([
               1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 100,
@@ -128,7 +128,7 @@ const BetPage = () => {
           >{`Under ${matchup.totalScore}`}</button>
           <ul
             tabIndex={0}
-            className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+            className="dropdown-content mt-12 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
           >
             {renderDropdown([
               1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 100,
