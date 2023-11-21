@@ -17,44 +17,27 @@ const GameCards = () => {
     fetchData();
   }, []);
 
-  const renderMatchupButtons = (matchup) => {
-    const startTimeInMillis = matchup.startTime;
-    const startTimeDate = new Date(startTimeInMillis);
-
-    const options = {
-      timeZone: 'America/Chicago',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      hour12: true,
-    };
-    const formattedStartTime = startTimeDate.toLocaleDateString('en-US', options);
-
-    return (
-      <tr key={matchup.matchup}>
-        <td className='border-royalBlueThin'>{formattedStartTime}</td>
-        <td className='border-royalBlueThin'>{matchup.matchup}</td>
-        <td className='border-royalBlueThin'>
-          <button className='mybtn p-1 rounded'>
-            {`${matchup.awayTeam.name} ${matchup.awayTeam.pointSpread > 0 ? `+${matchup.awayTeam.pointSpread}` : matchup.awayTeam.pointSpread}`}
-          </button>
-        </td>
-        <td className='border-royalBlueThin'>
-          <button className='mybtn p-1 rounded'>
-            {`${matchup.homeTeam.name} ${matchup.homeTeam.pointSpread > 0 ? `+${matchup.homeTeam.pointSpread}` : matchup.homeTeam.pointSpread}`}
-          </button>
-        </td>
-        <td className='border-royalBlueThin'>
-          <button className='mybtn p-1 rounded'>{`Over ${matchup.totalScore}`}</button>
-        </td>
-        <td className='border-royalBlueThin'>
-          <button className='mybtn p-1 rounded'>{`Under ${matchup.totalScore}`}</button>
-        </td>
-      </tr>
-    );
-  };
+  const renderMatchupButtons = (matchup) => (
+    <tr key={matchup.matchup} className='border-royalBlueTop '>
+      <td>{matchup.matchup}</td>
+      <td>
+        <button className='mybtn p-1 rounded w-full my-2 lg:mx-1'>
+          {`${matchup.awayTeam.name} ${matchup.awayTeam.pointSpread > 0 ? `+${matchup.awayTeam.pointSpread}` : matchup.awayTeam.pointSpread}`}
+        </button>
+      </td>
+      <td>
+        <button className='mybtn p-1 rounded w-full lg:mx-1'>
+          {`${matchup.homeTeam.name} ${matchup.homeTeam.pointSpread > 0 ? `+${matchup.homeTeam.pointSpread}` : matchup.homeTeam.pointSpread}`}
+        </button>
+      </td>
+      <td>
+        <button className='mybtn p-1 rounded w-full lg:mx-1 '>{`Over ${matchup.totalScore}`}</button>
+      </td>
+      <td>
+        <button className='mybtn p-1 rounded w-full lg:mx-1'>{`Under ${matchup.totalScore}`}</button>
+      </td>
+    </tr>
+  );
 
   return (
     <div className="flex flex-col white-bg mt-4 mx-5 rounded-xl border-royalBlue items-center justify-center mb-32">
@@ -62,7 +45,6 @@ const GameCards = () => {
       <table>
         <thead>
           <tr>
-            <th className='royalBlue'>Start Time (CT)</th>
             <th className='royalBlue'>Matchup</th>
             <th className='royalBlue'>Away</th>
             <th className='royalBlue'>Home</th>
