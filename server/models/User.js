@@ -36,7 +36,7 @@ const userProfileSchema = new Schema({
   },
   units: {
       type: Number,
-      default: 0,
+      default: 150, 
   }
 });
 
