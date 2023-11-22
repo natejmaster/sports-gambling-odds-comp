@@ -25,17 +25,6 @@ const resolvers = {
     
           return { token, user };
         },
-      //  addBet: async (parent, { betData }, context) => {
-      //   if (context.user) {
-      //     const updatedUser = await User.findByIdAndUpdate(
-      //       { _id: context.user._id },
-      //       { $push: { bets: betData } },
-      //       { new: true }
-      //     );
-      //     return updatedUser;
-      //   }
-      //   throw new AuthenticationError('You need to be logged in!');
-      // }
     }
   };
 
