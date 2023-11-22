@@ -140,7 +140,7 @@ const BetPage = () => {
   );
 
   return (
-    <div className="flex flex-col white-bg mt-4 mx-5 rounded-xl border-royalBlue items-center justify-center mb-32">
+    <div className="flex flex-col white-bg mt-4 mx-5 rounded-xl border-royalBlue shadow-xl items-center justify-center mb-80">
       <h2 className="text-3xl heading">Matchups</h2>
 
       <table>
