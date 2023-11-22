@@ -23,3 +23,37 @@ export const ADD_USER = gql`
     }
   }
 `;
+
+export const ADD_BET = gql`
+  mutation addBet(
+    $betType: String!
+    $matchup: String!
+    $spread: Int
+    $winner: String
+    $total: Int
+    $endTime: Int!
+    $betStatus: String!
+    $units: Int!
+  ) {
+    addBet(
+      betType: $betType
+      matchup: $matchup
+      spread: $spread
+      winner: $winner
+      total: $total
+      endTime: $endTime
+      betStatus: $betStatus
+      units: $units
+    ) {
+      _id
+      betType
+      matchup
+      spread
+      winner
+      total
+      endTime
+      betStatus
+      units
+    }
+  }
+`;

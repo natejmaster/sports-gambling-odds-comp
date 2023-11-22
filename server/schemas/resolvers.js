@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User } = require('../models');
+const { User, Bet } = require('../models');
 const { signToken } = require('../utils/auth');
 const resolvers = {
     Mutation: {
@@ -24,6 +24,19 @@ const resolvers = {
           const token = signToken(user);
     
           return { token, user };
+        },
+        
+        addBet: async (parent, { betType, matchup, spread, winner, total, endTime, betStatus, units }, context) => {
+          if (context.user) {
+            const bet = await Bet.create({ betType, matchup, spread, winner, total, endTime, betStatus, units });
+            const user = await User.findByIdAndUpdate(
+              { _id: context.user._id },
+              { $push: { bets: bet._id } },
+              { new: true }
+            );
+            return bet;
+          }
+          throw new AuthenticationError('You need to be logged in!');
         },
     }
   };
