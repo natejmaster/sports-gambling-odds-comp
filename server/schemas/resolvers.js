@@ -31,7 +31,7 @@ const resolvers = {
             const bet = await Bet.create({ betType, matchup, spread, winner, total, endTime, betStatus, units });
             const user = await User.findByIdAndUpdate(
               { _id: context.user._id },
-              { $push: { bets: bet._id } },
+              { $push: { activeBets: bet._id } },
               { new: true }
             );
             return bet;

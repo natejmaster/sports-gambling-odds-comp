@@ -3,9 +3,12 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useMutation } from "@apollo/client";
 import { ADD_BET } from "../utils/mutations";
+import Auth from "../utils/auth";
+
 
 const BetPage = () => {
   const [matchups, setMatchups] = useState([]);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,9 +25,11 @@ const BetPage = () => {
     fetchData();
   }, []);
 
+
   const [addBet, { data, error }] = useMutation(ADD_BET);
 
   const handleDropdownClick = (betData) => {
+
     Swal.fire({
       title: "Confirm Bet",
       html: `Do you want to place a bet for ${betData.units} units?`,
@@ -36,6 +41,8 @@ const BetPage = () => {
       cancelButtonColor: "#BD6B57",
     }).then((result) => {
       if (result.isConfirmed) {
+        console.log(number, user);
+
         Swal.fire({
           title: "Bet Placed!",
           icon: "success",
@@ -55,7 +62,9 @@ const BetPage = () => {
   const renderDropdown = (numbers) => {
     return numbers.map((number) => (
       <li key={number}>
+
         <a onClick={() => handleDropdownClick({ units: number })}>{number}</a>
+
       </li>
     ));
   };

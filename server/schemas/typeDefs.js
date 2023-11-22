@@ -3,7 +3,7 @@ const typeDefs = `
     _id: ID!
     username: String!
     email: String!
-    password: String!
+    password: String! 
   }
   type Bet {
     _id: ID!

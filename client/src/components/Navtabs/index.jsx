@@ -13,7 +13,7 @@ export default function NavTabs() {
         label: 'Home'
     };
 
-    const links = Auth.loggedIn() ? [homeLink, { key: 2, to: '/betpage', label: 'Place Bets!' }, { key: 3, to: '/scoreboard', label: 'Scoreboard' }] : [homeLink];
+    const links = Auth.loggedIn() ? [homeLink, { key: 2, to: '/betpage', label: 'Place Bets!' }, { key: 3, to: '/profile', label: 'Profile' }] : [homeLink];
 
  
     const handleLinkClick = (to) => {
