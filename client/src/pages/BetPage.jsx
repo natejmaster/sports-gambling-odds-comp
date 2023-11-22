@@ -5,13 +5,11 @@ import { useMutation } from "@apollo/client";
 import { ADD_BET } from "../utils/mutations";
 import Auth from "../utils/auth";
 
+
 const BetPage = () => {
   const [matchups, setMatchups] = useState([]);
-  const [betAmount, setBetAmount] = useState(0);
-  const [betType, setBetType] = useState("");
-  
-  const user = Auth.getProfile().data._id;
-  
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -26,12 +24,15 @@ const BetPage = () => {
 
     fetchData();
   }, []);
- const [addBet, {data, error }] = useMutation(ADD_BET);
-  const handleDropdownClick = (number, user) => {
-    // Use SweetAlert to show a confirmation dialog
+
+
+  const [addBet, { data, error }] = useMutation(ADD_BET);
+
+  const handleDropdownClick = (betData) => {
+
     Swal.fire({
       title: "Confirm Bet",
-      html: `Do you want to place a bet for ${number} units?`,
+      html: `Do you want to place a bet for ${betData.units} units?`,
       icon: "question",
       showCancelButton: true,
       confirmButtonText: "Yes",
@@ -39,27 +40,35 @@ const BetPage = () => {
       confirmButtonColor: "#050e44",
       cancelButtonColor: "#BD6B57",
     }).then((result) => {
-      // If the user confirms the bet, show a success message
       if (result.isConfirmed) {
         console.log(number, user);
+
         Swal.fire({
           title: "Bet Placed!",
           icon: "success",
           confirmButtonColor: "#050e44",
+        }).then(() => {
+          // Perform mutation using betData
+          addBet({
+            variables: {
+              ...betData,
+            },
+          });
         });
-     
       }
     });
   };
 
-
   const renderDropdown = (numbers) => {
     return numbers.map((number) => (
       <li key={number}>
-        <a onClick={() => handleDropdownClick(number, user)}>{number}</a>
+
+        <a onClick={() => handleDropdownClick({ units: number })}>{number}</a>
+
       </li>
     ));
   };
+
   const renderMatchupButtons = (matchup) => (
     <tr key={matchup.matchup} className="border-royalBlueTop">
       <td className="text-sm font-bold royalBlue">{matchup.matchup}</td>
@@ -68,8 +77,13 @@ const BetPage = () => {
           <button
             tabIndex={0}
             className="gold-bg mt-12 px-2 h-16 rounded-xl royalBlue mybtn mb-7  shadow-xl w-full text-sm font-bold lg:text-md"
+            data-matchup={matchup.matchup}
+            data-winner={matchup.awayTeam.name}
+            data-spread={matchup.awayTeam.pointSpread}
+            data-total={null}
+            data-bettype="spread"
+            data-endtime={matchup.endTime}
           >
-            {" "}
             {`${matchup.awayTeam.name} ${
               matchup.awayTeam.pointSpread > 0
                 ? `+${matchup.awayTeam.pointSpread}`
@@ -91,6 +105,12 @@ const BetPage = () => {
           <button
             tabIndex={0}
             className="gold-bg mt-12 px-2 h-16 rounded-xl royalBlue mybtn mb-7  shadow-xl w-full text-sm font-bold lg:text-md"
+            data-matchup={matchup.matchup}
+            data-winner={matchup.homeTeam.name}
+            data-spread={matchup.homeTeam.pointSpread}
+            data-total={null}
+            data-bettype="spread"
+            data-endtime={matchup.endTime}
           >
             {" "}
             {`${matchup.homeTeam.name} ${
@@ -114,6 +134,12 @@ const BetPage = () => {
           <button
             tabIndex={0}
             className="gold-bg mt-12 px-2 h-16 rounded-xl royalBlue mybtn mb-7  shadow-xl w-full text-sm font-bold lg:text-md"
+            data-matchup={matchup.matchup}
+            data-winner={null}
+            data-spread={null}
+            data-total={matchup.totalScore}
+            data-bettype="overTotal"
+            data-endtime={matchup.endTime}
           >{`Over ${matchup.totalScore}`}</button>
           <ul
             tabIndex={0}
@@ -130,6 +156,12 @@ const BetPage = () => {
           <button
             tabIndex={0}
             className="gold-bg mt-12 px-2 h-16 rounded-xl royalBlue mybtn mb-7  shadow-xl w-full text-sm font-bold lg:text-md"
+            data-matchup={matchup.matchup}
+            data-winner={null}
+            data-spread={null}
+            data-total={matchup.totalScore}
+            data-bettype="underTotal"
+            data-endtime={matchup.endTime}
           >{`Under ${matchup.totalScore}`}</button>
           <ul
             tabIndex={0}

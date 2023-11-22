@@ -72,7 +72,7 @@ async function checkAndUpdateBets() {
     const expiredBets = await Bet.find({
       endTime: { $lte: currentTime },
       betStatus: 'active'
-    }).populate('user'); // Assuming 'user' field in Bet is populated
+    }).populate('user');
 
     for (const bet of expiredBets) {
       const apiData = await fetch('/api/results-data');
@@ -115,5 +115,3 @@ setInterval(checkAndUpdateBets, 60000);
 
 // Export the function for usage
 module.exports = { checkAndUpdateBets };
-
-  
