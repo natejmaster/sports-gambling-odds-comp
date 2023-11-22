@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useMutation } from "@apollo/client";
+import { ADD_BET } from "../utils/mutations";
+
 
 const BetPage = () => {
   const [matchups, setMatchups] = useState([]);
   const [betAmount, setBetAmount] = useState(0);
+  const [betType, setBetType] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,7 +24,7 @@ const BetPage = () => {
 
     fetchData();
   }, []);
-
+ const [addBet, {data, error }] = useMutation(ADD_BET);
   const handleDropdownClick = (number) => {
     // Use SweetAlert to show a confirmation dialog
     Swal.fire({
@@ -33,20 +37,19 @@ const BetPage = () => {
       confirmButtonColor: "#050e44",
       cancelButtonColor: "#BD6B57",
     }).then((result) => {
-      // If the user clicks "Yes", set the bet amount
+      // If the user confirms the bet, show a success message
       if (result.isConfirmed) {
         console.log(number);
-        setBetAmount(number);
-        // You can add additional logic or API calls for placing the bet here
         Swal.fire({
-          title: "Success!",
-          text: `You have successfully placed a bet for ${number} units... Good luck.`,
+          title: "Bet Placed!",
           icon: "success",
           confirmButtonColor: "#050e44",
         });
+     
       }
     });
   };
+
 
   const renderDropdown = (numbers) => {
     return numbers.map((number) => (
