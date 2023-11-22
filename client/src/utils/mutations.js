@@ -28,9 +28,9 @@ export const ADD_BET = gql`
   mutation addBet(
     $betType: String!
     $matchup: String!
-    $spread: Int
+    $spread: Float
     $winner: String
-    $total: Int
+    $total: Float
     $endTime: Int!
     $betStatus: String!
     $units: Int!
