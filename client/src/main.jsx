@@ -7,7 +7,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import BetPage from "./pages/BetPage.jsx";
-import ScoreBoard from "./pages/ScoreBoard.jsx";
+import Profile from "./pages/Profile.jsx";
 
 // Create React Router
 const router = createBrowserRouter([
@@ -32,8 +32,8 @@ const router = createBrowserRouter([
         element: <BetPage />,
       },
       {
-        path: "scoreboard",
-        element: <ScoreBoard />,
+        path: "profile",
+        element: <Profile />,
       },
     ],
   },
