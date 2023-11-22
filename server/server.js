@@ -91,12 +91,24 @@ const startApolloServer = async () => {
     }
   });
 
-  app.get('/api/results-data', async (req, res) => {
+app.get('/api/results-data', async (req, res) => {
     try {
       const response = await axios.get('https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard');
+  
+      // Extracting relevant data for each game
       const gamesData = response.data?.events.map((event) => {
-        /* Extracting relevant data for each game */
+        const competitors = event?.competitions[0]?.competitors;
+        const scores = competitors.map((competitor) => ({
+          team: competitor.team.displayName,
+          score: competitor.score,
+        }));
+        
+        return {
+          matchup: event.name,
+          scores,
+        };
       });
+  
       res.json(gamesData);
     } catch (error) {
       console.error(error);
