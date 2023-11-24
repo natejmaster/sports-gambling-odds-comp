@@ -1,0 +1,15 @@
+[
+    {
+      "matchup": "Minnesota Vikings @ Denver Broncos",
+      "awayTeam": {
+        "name": "Minnesota Vikings",
+        "pointSpread": "1.5"
+      },
+      "homeTeam": {
+        "name": "Denver Broncos",
+        "pointSpread": "-1.5"
+      },
+      "totalScore": 39.5
+    }
+  ]
+  

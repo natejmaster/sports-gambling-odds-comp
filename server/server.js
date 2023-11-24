@@ -5,6 +5,7 @@ const path = require('path');
 const axios = require('axios');
 const cors = require('cors');
 const { authMiddleware } = require('./utils/auth');
+const fs = require('fs');
 
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
@@ -16,7 +17,26 @@ const server = new ApolloServer({
   resolvers,
 });
 
-let backupData = null; // Variable to store backup data
+const backupFilePath = path.join(__dirname, 'backup.json');
+
+const saveDataToFile = (data) => {
+  fs.writeFile(backupFilePath, JSON.stringify(data), (err) => {
+    if (err) throw err;
+    console.log('Backup data saved.');
+  });
+};
+
+const readDataFromFile = () => {
+  try {
+    const data = fs.readFileSync(backupFilePath, 'utf8');
+    return JSON.parse(data);
+  } catch (err) {
+    console.error('Error reading backup file:', err);
+    return null;
+  }
+};
+
+let backupData = readDataFromFile();
 
 const startApolloServer = async () => {
   await server.start();
@@ -76,26 +96,30 @@ const startApolloServer = async () => {
         };
       });
 
-      if (simplifiedData && simplifiedData.length > 0) {
-        backupData = simplifiedData; // Update backupData if response isn't empty
+      if (Array.isArray(simplifiedData) && simplifiedData.length > 0) {
+        backupData = simplifiedData;
+        saveDataToFile(simplifiedData);
+      } else if (!Array.isArray(simplifiedData) && backupData) {
+        res.json(backupData);
+        return;
       }
 
-      if ((!simplifiedData || simplifiedData.length === 0) && backupData) {
-        res.json(backupData); // Use backupData if response is empty
-      } else {
-        res.json(simplifiedData);
-      }
+      res.json(simplifiedData);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      const backup = readDataFromFile();
+      if (backup) {
+        res.json(backup);
+      } else {
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
     }
   });
 
-app.get('/api/results-data', async (req, res) => {
+  app.get('/api/results-data', async (req, res) => {
     try {
       const response = await axios.get('https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard');
   
-      // Extracting relevant data for each game
       const gamesData = response.data?.events.map((event) => {
         const competitors = event?.competitions[0]?.competitors;
         const scores = competitors.map((competitor) => ({
