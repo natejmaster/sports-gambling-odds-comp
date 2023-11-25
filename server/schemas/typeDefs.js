@@ -11,12 +11,12 @@ const typeDefs = `
   }
   type Bet {
     _id: ID!
-    betType: String!
+    betType: String
     matchup: String!
-    spread: Int
+    spread: Float
     winner: String
     total: Int
-    endTime: Int!
+    endTime: Float
     betStatus: String
     units: Int!
   }
@@ -26,12 +26,12 @@ const typeDefs = `
   }
 
   input BetInput {
-    betType: String!
+    betType: String
     matchup: String!
     spread: Float
     winner: String
     total: Float
-    endTime: Int!
+    endTime: Float
     betStatus: String!
     units: Int!
   }
@@ -45,7 +45,7 @@ type Query {
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addBet(betType: String!, matchup: String!, spread: Float, winner: String, total: Float, endTime: Float!, betStatus: String!, units: Int!): Bet
+    addBet(betType: String!, matchup: String!, spread: Float, winner: String, total: Float, endTime: Float!, betStatus: String, units: Int!): Bet
 
   }
 `;
