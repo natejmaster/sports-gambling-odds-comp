@@ -43,9 +43,10 @@ const BetPage = () => {
           icon: "success",
           confirmButtonColor: "#050e44",
         }).then(() => {
-          console.log("Bet Payload:", betData);
+          const payloadWithBetStatus = { ...betData, betStatus: "active" };
+          console.log("Bet Payload:", payloadWithBetStatus);
           addBet({
-            variables: { ...betData },
+            variables: payloadWithBetStatus,
           });
         });
       }
@@ -126,7 +127,7 @@ const BetPage = () => {
             {renderDropdown([
               1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 100
             ], {
-              betType: "homeSpread",
+              betType: "spread",
               matchup: matchup.matchup,
               spread: parseFloat(matchup.homeTeam.pointSpread),
               endTime: matchup.endTime,
