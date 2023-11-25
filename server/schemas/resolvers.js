@@ -6,7 +6,9 @@ Query: {
     me: async (parent, args, context) => {
       if (context.user) {
         const userData = await User.findOne({ _id: context.user._id })
-        .select('-__v -password');
+          .select('-__v -password')
+          .populate('activeBets')
+          .populate('betHistory');
         return userData;
       }
       throw new AuthenticationError('Not logged in');
@@ -59,7 +61,9 @@ Query: {
                 { new: true }
               );
 
-              console.log('Updated User:', user);
+              const populatedUser = await User.findById(context.user._id).populate('activeBets');
+              console.log('Updated User with Bet Details:', populatedUser);
+              
               return bet;
             } else {
               throw new AuthenticationError('You need to be logged in!');
