@@ -8,6 +8,7 @@ import Auth from "../utils/auth";
 
 const BetPage = () => {
   const [matchups, setMatchups] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
 
 
   useEffect(() => {
@@ -19,6 +20,8 @@ const BetPage = () => {
         setMatchups(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false); // Turn off loading state
       }
     };
 
@@ -179,7 +182,7 @@ const BetPage = () => {
   return (
     <div className="flex flex-col white-bg mt-4 mx-5 rounded-xl border-royalBlue shadow-xl items-center justify-center mb-80">
       <h2 className="text-3xl heading">Matchups</h2>
-
+{loading && <div className="heading text-3xl">Loading...</div>}
       <table>
         <thead>
           <tr className="">
