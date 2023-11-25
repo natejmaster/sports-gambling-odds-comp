@@ -182,7 +182,11 @@ const BetPage = () => {
   return (
     <div className="flex flex-col white-bg mt-4 mx-5 rounded-xl border-royalBlue shadow-xl items-center justify-center mb-80">
       <h2 className="text-3xl heading">Matchups</h2>
-{loading && <div className="heading text-3xl">Loading...</div>}
+{loading && <div className="my-16 flex flex-row">
+  <p className="heading text-3xl">Loading...</p>
+<div className="heading text-3xl loading loading-spinner loading-lg"></div>
+</div>
+}
       <table>
         <thead>
           <tr className="">
