@@ -38,17 +38,37 @@ Query: {
         },
         
         addBet: async (parent, { betType, matchup, spread, winner, total, endTime, betStatus, units }, context) => {
-          if (context.user) {
-            const bet = await Bet.create({ betType, matchup, spread, winner, total, endTime, betStatus, units });
-            const user = await User.findByIdAndUpdate(
-              { _id: context.user._id },
-              { $push: { activeBets: bet._id } },
-              { new: true }
-            );
-            return bet;
+          try {
+            if (context.user) {
+              const bet = await Bet.create({
+                betType,
+                matchup,
+                spread,
+                winner,
+                total,
+                endTime,
+                betStatus,
+                units,
+                user: context.user._id,
+              });
+
+              console.log('Created Bet:', bet);
+              const user = await User.findByIdAndUpdate(
+                context.user._id,
+                { $push: { activeBets: bet._id } },
+                { new: true }
+              );
+
+              console.log('Updated User:', user);
+              return bet;
+            } else {
+              throw new AuthenticationError('You need to be logged in!');
+            }
+          } catch (error) {
+            console.error("Error in addBet resolver:", error);
+            throw error;
           }
-          throw new AuthenticationError('You need to be logged in!');
-        },
+        },               
     }
   };
 

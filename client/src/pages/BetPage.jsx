@@ -5,34 +5,28 @@ import { useMutation } from "@apollo/client";
 import { ADD_BET } from "../utils/mutations";
 import Auth from "../utils/auth";
 
-
 const BetPage = () => {
   const [matchups, setMatchups] = useState([]);
-  const [loading, setLoading] = useState(true); // Add loading state
-
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3001/api/simplified-bovada-data"
-        );
+        const response = await axios.get("http://localhost:3001/api/simplified-bovada-data");
         setMatchups(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
-        setLoading(false); // Turn off loading state
+        setLoading(false);
       }
     };
 
     fetchData();
   }, []);
 
-
   const [addBet, { data, error }] = useMutation(ADD_BET);
 
   const handleDropdownClick = (betData) => {
-
     Swal.fire({
       title: "Confirm Bet",
       html: `Do you want to place a bet for ${betData.units} units?`,
@@ -44,30 +38,25 @@ const BetPage = () => {
       cancelButtonColor: "#BD6B57",
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log(number, user);
-
         Swal.fire({
           title: "Bet Placed!",
           icon: "success",
           confirmButtonColor: "#050e44",
         }).then(() => {
-          // Perform mutation using betData
+          const payloadWithBetStatus = { ...betData, betStatus: "active" };
+          console.log("Bet Payload:", payloadWithBetStatus);
           addBet({
-            variables: {
-              ...betData,
-            },
+            variables: payloadWithBetStatus,
           });
         });
       }
     });
   };
 
-  const renderDropdown = (numbers) => {
+  const renderDropdown = (numbers, betData) => {
     return numbers.map((number) => (
       <li key={number}>
-
-        <a onClick={() => handleDropdownClick({ units: number })}>{number}</a>
-
+        <a onClick={() => handleDropdownClick({ ...betData, units: number })}>{number}</a>
       </li>
     ));
   };
@@ -75,14 +64,15 @@ const BetPage = () => {
   const renderMatchupButtons = (matchup) => (
     <tr key={matchup.matchup} className="border-royalBlueTop">
       <td className="text-sm font-bold royalBlue">{matchup.matchup}</td>
+      {/* Spread */}
       <td>
         <div className="dropdown mb-4 flex ml-1">
           <button
             tabIndex={0}
-            className="gold-bg mt-12 px-2 h-16 rounded-xl royalBlue mybtn mb-7  shadow-xl w-full text-sm font-bold lg:text-md"
+            className="gold-bg mt-12 px-2 h-16 rounded-xl royalBlue mybtn mb-7 shadow-xl w-full text-sm font-bold lg:text-md"
             data-matchup={matchup.matchup}
             data-winner={matchup.awayTeam.name}
-            data-spread={matchup.awayTeam.pointSpread}
+            data-spread={parseFloat(matchup.awayTeam.pointSpread)}
             data-total={null}
             data-bettype="spread"
             data-endtime={matchup.endTime}
@@ -97,25 +87,32 @@ const BetPage = () => {
             tabIndex={0}
             className="dropdown-content mt-12 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
           >
+            {/* Dropdown content for Spread */}
             {renderDropdown([
-              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 100,
-            ])}
+              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 100
+            ], {
+              betType: "spread",
+              matchup: matchup.matchup,
+              spread: parseFloat(matchup.awayTeam.pointSpread),
+              endTime: matchup.endTime,
+              winner: matchup.awayTeam.name
+            })}
           </ul>
         </div>
       </td>
+      {/* Home Spread */}
       <td>
         <div className="dropdown mb-4 flex ml-1">
           <button
             tabIndex={0}
-            className="gold-bg mt-12 px-2 h-16 rounded-xl royalBlue mybtn mb-7  shadow-xl w-full text-sm font-bold lg:text-md"
+            className="gold-bg mt-12 px-2 h-16 rounded-xl royalBlue mybtn mb-7 shadow-xl w-full text-sm font-bold lg:text-md"
             data-matchup={matchup.matchup}
             data-winner={matchup.homeTeam.name}
-            data-spread={matchup.homeTeam.pointSpread}
+            data-spread={parseFloat(matchup.homeTeam.pointSpread)}
             data-total={null}
             data-bettype="spread"
             data-endtime={matchup.endTime}
           >
-            {" "}
             {`${matchup.homeTeam.name} ${
               matchup.homeTeam.pointSpread > 0
                 ? `+${matchup.homeTeam.pointSpread}`
@@ -126,17 +123,25 @@ const BetPage = () => {
             tabIndex={0}
             className="dropdown-content mt-12 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
           >
+            {/* Dropdown content for Home Spread */}
             {renderDropdown([
-              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 100,
-            ])}
+              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 100
+            ], {
+              betType: "spread",
+              matchup: matchup.matchup,
+              spread: parseFloat(matchup.homeTeam.pointSpread),
+              endTime: matchup.endTime,
+              winner: matchup.homeTeam.name
+            })}
           </ul>
         </div>
       </td>
+      {/* Over Total */}
       <td>
         <div className="dropdown mb-4 flex ml-1">
           <button
             tabIndex={0}
-            className="gold-bg mt-12 px-2 h-16 rounded-xl royalBlue mybtn mb-7  shadow-xl w-full text-sm font-bold lg:text-md"
+            className="gold-bg mt-12 px-2 h-16 rounded-xl royalBlue mybtn mb-7 shadow-xl w-full text-sm font-bold lg:text-md"
             data-matchup={matchup.matchup}
             data-winner={null}
             data-spread={null}
@@ -148,17 +153,24 @@ const BetPage = () => {
             tabIndex={0}
             className="dropdown-content mt-12 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
           >
+            {/* Dropdown content for Over Total */}
             {renderDropdown([
-              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 100,
-            ])}
+              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 100
+            ], {
+              betType: "overTotal",
+              matchup: matchup.matchup,
+              totalScore: matchup.totalScore,
+              endTime: matchup.endTime
+            })}
           </ul>
         </div>
       </td>
+      {/* Under Total */}
       <td>
         <div className="dropdown mb-4 flex ml-1">
           <button
             tabIndex={0}
-            className="gold-bg mt-12 px-2 h-16 rounded-xl royalBlue mybtn mb-7  shadow-xl w-full text-sm font-bold lg:text-md"
+            className="gold-bg mt-12 px-2 h-16 rounded-xl royalBlue mybtn mb-7 shadow-xl w-full text-sm font-bold lg:text-md"
             data-matchup={matchup.matchup}
             data-winner={null}
             data-spread={null}
@@ -170,9 +182,15 @@ const BetPage = () => {
             tabIndex={0}
             className="dropdown-content mt-12 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
           >
+            {/* Dropdown content for Under Total */}
             {renderDropdown([
-              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 100,
-            ])}
+              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 100
+            ], {
+              betType: "underTotal",
+              matchup: matchup.matchup,
+              totalScore: matchup.totalScore,
+              endTime: matchup.endTime
+            })}
           </ul>
         </div>
       </td>
@@ -182,6 +200,7 @@ const BetPage = () => {
   return (
     <div className="flex flex-col white-bg mt-4 mx-5 rounded-xl border-royalBlue shadow-xl items-center justify-center mb-80">
       <h2 className="text-3xl heading">Matchups</h2>
+
 {loading && <div className="my-16 flex flex-row">
   <p className="heading text-3xl">Loading Matchups...</p>
 <div className="heading text-3xl loading loading-spinner loading-lg"></div>

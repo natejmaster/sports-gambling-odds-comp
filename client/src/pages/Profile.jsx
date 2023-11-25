@@ -4,10 +4,9 @@ import { QUERY_ME } from '../utils/queries';
 export default function Profile() {
     const username = auth.getProfile().data.username;
     const { loading, data } = useQuery(QUERY_ME);
-    
+    console.log(data);
     const user = data?.me || {};
-    console.log(user);
- 
+
     return (
         <>
         <div>
