@@ -31,8 +31,8 @@ export const ADD_BET = gql`
     $spread: Float
     $winner: String
     $total: Float
-    $endTime: Int!
-    $betStatus: String!
+    $endTime: Float!
+    $betStatus: String = "Active"
     $units: Int!
   ) {
     addBet(
