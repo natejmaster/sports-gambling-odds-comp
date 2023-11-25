@@ -43,6 +43,7 @@ const BetPage = () => {
           icon: "success",
           confirmButtonColor: "#050e44",
         }).then(() => {
+          console.log("Bet Payload:", betData);
           addBet({
             variables: { ...betData },
           });

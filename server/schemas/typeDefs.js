@@ -17,7 +17,7 @@ const typeDefs = `
     winner: String
     total: Int
     endTime: Int!
-    betStatus: String!
+    betStatus: String
     units: Int!
   }
   type Auth {
@@ -45,7 +45,7 @@ type Query {
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addBet(betType: String!, matchup: String!, spread: Float, winner: String, total: Float, endTime: Int!, betStatus: String!, units: Int!): Bet
+    addBet(betType: String!, matchup: String!, spread: Float, winner: String, total: Float, endTime: Float!, betStatus: String!, units: Int!): Bet
 
   }
 `;
