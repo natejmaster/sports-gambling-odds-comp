@@ -1,15 +1,14 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 3000,
+    port: process.env.PORT || 3000,
     open: true,
     proxy: {
       '/graphql': {
-        target: 'http://localhost:3001',
+        target: process.env.BACKEND_URL || 'http://localhost:3001',
         secure: false,
         changeOrigin: true
       }
