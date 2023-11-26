@@ -29,7 +29,7 @@ const BetPage = () => {
   const handleDropdownClick = (betData) => {
     Swal.fire({
       title: "Confirm Bet",
-      html: `Do you want to place a bet for ${betData.units} units?`,
+      html: `Do you want to place a bet for ${betData.units} Units?`,
       icon: "question",
       showCancelButton: true,
       confirmButtonText: "Yes",
@@ -63,13 +63,13 @@ const BetPage = () => {
 
   const renderMatchupButtons = (matchup) => (
     <tr key={matchup.matchup} className="border-royalBlueTop">
-      <td className="text-sm font-bold royalBlue">{matchup.matchup}</td>
+      <td className="text-xs md:text-sm font-bold royalBlue">{matchup.matchup}</td>
       {/* Spread */}
       <td>
         <div className="dropdown mb-4 flex ml-1">
           <button
             tabIndex={0}
-            className="gold-bg mt-12 px-2 h-16 rounded-xl royalBlue mybtn mb-7 shadow-xl w-full text-sm font-bold lg:text-md"
+            className="gold-bg mt-12 md:px-2 h-16 rounded-xl royalBlue mybtn mb-7 shadow-xl w-full text-xs font-bold md:text-md"
             data-matchup={matchup.matchup}
             data-winner={matchup.awayTeam.name}
             data-spread={parseFloat(matchup.awayTeam.pointSpread)}
@@ -105,7 +105,7 @@ const BetPage = () => {
         <div className="dropdown mb-4 flex ml-1">
           <button
             tabIndex={0}
-            className="gold-bg mt-12 px-2 h-16 rounded-xl royalBlue mybtn mb-7 shadow-xl w-full text-sm font-bold lg:text-md"
+            className="gold-bg mt-12 md:px-2 h-16 rounded-xl royalBlue mybtn mb-7 shadow-xl w-full text-xs font-bold md:text-md"
             data-matchup={matchup.matchup}
             data-winner={matchup.homeTeam.name}
             data-spread={parseFloat(matchup.homeTeam.pointSpread)}
@@ -141,7 +141,7 @@ const BetPage = () => {
         <div className="dropdown mb-4 flex ml-1">
           <button
             tabIndex={0}
-            className="gold-bg mt-12 px-2 h-16 rounded-xl royalBlue mybtn mb-7 shadow-xl w-full text-sm font-bold lg:text-md"
+            className="gold-bg mt-12 md:px-2 h-16 rounded-xl royalBlue mybtn mb-7 shadow-xl w-full text-xs font-bold md:text-md"
             data-matchup={matchup.matchup}
             data-winner={null}
             data-spread={null}
@@ -170,7 +170,7 @@ const BetPage = () => {
         <div className="dropdown mb-4 flex ml-1">
           <button
             tabIndex={0}
-            className="gold-bg mt-12 px-2 h-16 rounded-xl royalBlue mybtn mb-7 shadow-xl w-full text-sm font-bold lg:text-md"
+            className="gold-bg mt-12 md:px-2 h-16 rounded-xl royalBlue mybtn mb-7 shadow-xl w-full text-xs font-bold md:text-md"
             data-matchup={matchup.matchup}
             data-winner={null}
             data-spread={null}
