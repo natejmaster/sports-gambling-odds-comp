@@ -55,7 +55,16 @@ Query: {
               });
 
               console.log('Created Bet:', bet);
-              const user = await User.findByIdAndUpdate(
+
+              const user = await User.findById(context.user._id);
+
+              if (user.units < units) {
+                throw new Error('Insufficient Unit Balance for this Bet!! Please Try Again.')
+              }
+              user.units -= units;
+              await user.save();
+              
+              await User.findByIdAndUpdate(
                 context.user._id,
                 { $push: { activeBets: bet._id } },
                 { new: true }
