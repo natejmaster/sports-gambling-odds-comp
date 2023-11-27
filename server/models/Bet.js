@@ -10,7 +10,7 @@ const betSchema = new Schema({
     },
     betType: {
         type: String,
-        enum: ['spread', 'overTotal', 'underTotal'],
+        enum: ['spread', 'overTotal', 'underTotal', 'Spread', 'Over Bet', 'Under Bet'],
         required: true,
     },
     matchup: {
@@ -34,7 +34,7 @@ const betSchema = new Schema({
         type: String,
         enum: ['active', 'win', 'loss', 'push'],
         default: 'active',
-        required: true,
+        // required: true,
     },
     units: {
         type: Number,

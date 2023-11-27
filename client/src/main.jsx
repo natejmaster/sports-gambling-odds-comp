@@ -8,7 +8,8 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import BetPage from "./pages/BetPage.jsx";
 import Profile from "./pages/Profile.jsx";
-
+import LeaderBoard from "./pages/LeaderBoard.jsx";
+import BuyUnits from "./pages/BuyUnits.jsx";
 // Create React Router
 const router = createBrowserRouter([
   {
@@ -34,6 +35,14 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: <Profile />,
+      },
+      {
+        path: "leaderboard",
+        element: <LeaderBoard />,
+      },
+      {
+        path: "buyunits",
+        element: <BuyUnits />,
       },
     ],
   },
