@@ -1,5 +1,6 @@
 import kurtWarnerimg from "../assets/images/kurtwarner.png";
-
+import { Link } from "react-router-dom";
+import Auth from "../utils/auth";
 export default function Home() {
   return (
     <>
@@ -27,6 +28,16 @@ export default function Home() {
             optimal odds. Welcome to a world where your choices are informed,
             and your victories are optimized.
           </p>
+          {!Auth.loggedIn() && (
+          <div className="flex flex-row">
+          <Link className="gold-bg py-2 px-4 rounded-xl mybtn mb-7 mt-2 font-bold text-xl shadow-xl mr-4" to="/signup">
+            Signup
+          </Link>
+          <Link className="gold-bg py-2 px-4 rounded-xl mybtn mb-7 mt-2 font-bold text-xl shadow-xl ml-4" to="/login">
+            Login
+          </Link>
+          </div>
+          )}
         </div>
       </section>
       <section>

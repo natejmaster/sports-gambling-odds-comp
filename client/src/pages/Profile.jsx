@@ -1,11 +1,18 @@
 import auth from "../utils/auth";
 import { useQuery } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
+import { useEffect } from "react";
 export default function Profile() {
     const username = auth.getProfile().data.username;
-    const { loading, data } = useQuery(QUERY_ME);
+    const { loading, data, refetch } = useQuery(QUERY_ME);
     const user = data?.me || {};
+    console.log(user);
     
+
+    useEffect(() => {
+        refetch();
+    }
+    , []);
     return (
         <>
         <div className="flex flex-col  white-bg mx-5 mt-5 py-2 rounded-xl border-royalBlue  mb-8 justify-center">
@@ -56,9 +63,25 @@ export default function Profile() {
         {user.betHistory?.map((history) => {
             return (
                 <div className="flex flex-col  white-bg mx-5  rounded-xl border-royalBlue lg:flex-row mb-8 justify-center">
-         
-                    <h3 className="heading text-3xl text-center">Bet Type: {history.betType}</h3>
-                    <h3 className="heading text-3xl text-center">Result: {history.result}</h3>
+                    <h3 className="heading text-3xl text-center">Matchup</h3>
+                    <p className="royalBlue font-bold">{history.matchup}</p>
+                    <h3 className="heading text-3xl text-center">Bet Type</h3>
+                    {history.betType === "spread" ? (
+                        <>
+                        <p className="royalBlue font-bold">Spread {history.spread}</p>
+                        <h3 className="heading text-3xl text-center">Predicted Winner</h3>
+                        <p className="royalBlue font-bold">{history.winner}</p>
+                        </>
+                    ) : history.betType === "overTotal" ? (
+                        <p className="royalBlue font-bold">Over Total</p>
+                    ) : (
+                        <p className="royalBlue font-bold">Under Total</p>
+                    )}
+                    <h3 className="heading text-3xl text-center">Amount Bet</h3>
+                    <p className="royalBlue font-bold">{history.units}</p>
+                    <h3 className="heading text-3xl text-center">Result</h3>
+                    <p className="royalBlue font-bold">{history.result}</p>
+                  
                 </div>
             )}
         )}

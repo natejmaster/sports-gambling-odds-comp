@@ -18,7 +18,7 @@ export default function Nav() {
     <nav className="flex justify-end">
       {Auth.loggedIn() ? (
         <button className="linkGold underline px-4" onClick={logout}>
-          logout
+          Logout
         </button>
       ) : (
         <>
