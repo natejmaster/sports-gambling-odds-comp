@@ -113,7 +113,7 @@ function Signup(props) {
         </div>
 
         <button
-          className=""
+          className="gold-bg py-2 mt-2  px-4 rounded-xl royalBlue mybtn mb-7 font-bold text-xl shadow-xl"
           type="submit"
         >
           Submit
