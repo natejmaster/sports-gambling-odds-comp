@@ -79,30 +79,34 @@ async function checkAndUpdateBets() {
     for (const bet of expiredBets) {
       const apiData = await fetch(`${baseURL}/api/results-data`);
       const jsonData = await apiData.json();
-
+    
       let updatedBet = {};
-
+    
       if (bet.betType === 'spread') {
         updatedBet = compareSpreadBet(bet, jsonData);
       } else if (bet.betType === 'overTotal' || bet.betType === 'underTotal') {
         updatedBet = compareTotalBet(bet, jsonData);
       }
-
+    
       bet.betStatus = updatedBet.betStatus;
-
+    
       await bet.save();
-
-      // Push updated bet directly into user's betHistory
-      bet.user.betHistory.push(bet);
-      bet.user.activeBets = bet.user.activeBets.filter(activeBetId => activeBetId.toString() !== bet._id.toString());
-
+    
+      // Get the actual User object associated with the bet
+      const user = await User.findById(bet.user._id);
+    
+      // Update bet history and active bets
+      user.betHistory.push(bet._id);
+      user.activeBets = user.activeBets.filter(activeBetId => activeBetId.toString() !== bet._id.toString());
+    
+      // Update user's units based on bet status
       if (bet.betStatus === 'win') {
-        bet.user.units += (2 * bet.units); // Winning bet doubles the units
+        user.units += 2 * bet.units; // Winning bet doubles the units
       } else if (bet.betStatus === 'push') {
-        bet.user.units += bet.units; // Pushed bet returns the initial units
+        user.units += bet.units; // Pushed bet returns the initial units
       }
-
-      await bet.user.save();
+    
+      await user.save();
     }
   } catch (error) {
     console.error('Error:', error);
