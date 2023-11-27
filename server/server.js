@@ -5,6 +5,7 @@ const path = require('path');
 const axios = require('axios');
 const cors = require('cors');
 const { authMiddleware } = require('./utils/auth');
+const { checkAndUpdateBets } = require('./utils/betValidation');
 const fs = require('fs');
 
 const { typeDefs, resolvers } = require('./schemas');
@@ -147,6 +148,8 @@ const startApolloServer = async () => {
     });
   }
 
+  setInterval(checkAndUpdateBets, 60000);
+  
   db.once('open', () => {
     app.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);

@@ -1,4 +1,5 @@
 const Bet = require('../models/Bet');
+const User = require('../models/User');
 const fetch = require('node-fetch');
 
 // Function to compare spread bets using provided data
@@ -65,44 +66,42 @@ function compareTotalBet(bet, jsonData) {
 
 // This function will be responsible for checking and updating bets
 async function checkAndUpdateBets() {
-  const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
+  const currentTime = Date.now(); // Current time in milliseconds
 
   try {
-    // Find bets where endTime <= current time and betStatus is 'active'
     const expiredBets = await Bet.find({
       endTime: { $lte: currentTime },
       betStatus: 'active'
     }).populate('user');
 
+    const baseURL = process.env.NODE_ENV === 'production' ? 'https://rocky-hollows-26852-54ebc26e9935.herokuapp.com' : 'http://localhost:3001';
+
     for (const bet of expiredBets) {
-      const apiData = await fetch('/api/results-data');
+      const apiData = await fetch(`${baseURL}/api/results-data`);
       const jsonData = await apiData.json();
 
+      let updatedBet = {};
+
       if (bet.betType === 'spread') {
-        const result = compareSpreadBet(bet, jsonData);
-        // Handle result for spread bet
+        updatedBet = compareSpreadBet(bet, jsonData);
       } else if (bet.betType === 'overTotal' || bet.betType === 'underTotal') {
-        const result = compareTotalBet(bet, jsonData);
-        // Handle result for overTotal or underTotal bet
+        updatedBet = compareTotalBet(bet, jsonData);
       }
+
+      bet.betStatus = updatedBet.betStatus;
 
       await bet.save();
 
-      const updatedBet = new Bet({
-        user: bet.user._id,
-        betType: bet.betType,
-        betStatus: bet.betStatus,
-        units: bet.units,
-      });
-
-      bet.user.betHistory.push(updatedBet);
-      await bet.user.save();
+      // Push updated bet directly into user's betHistory
+      bet.user.betHistory.push(bet);
+      bet.user.activeBets = bet.user.activeBets.filter(activeBetId => activeBetId.toString() !== bet._id.toString());
 
       if (bet.betStatus === 'win') {
-        bet.user.units += bet.betType === 'win' ? 2 * bet.units : bet.units;
-      } else if (bet.betStatus === 'push' && bet.betType === 'push') {
-        bet.user.units += bet.units;
+        bet.user.units += (2 * bet.units); // Winning bet doubles the units
+      } else if (bet.betStatus === 'push') {
+        bet.user.units += bet.units; // Pushed bet returns the initial units
       }
+
       await bet.user.save();
     }
   } catch (error) {
@@ -110,8 +109,4 @@ async function checkAndUpdateBets() {
   }
 }
 
-// Periodically check for expired bets and trigger the update process
-setInterval(checkAndUpdateBets, 60000);
-
-// Export the function for usage
 module.exports = { checkAndUpdateBets };
