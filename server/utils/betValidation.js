@@ -11,16 +11,20 @@ function compareSpreadBet(bet, jsonData) {
     const matchedTeamData = matchedData.scores.find(score => score.team === winner);
 
     if (matchedTeamData) {
-      const adjustedScore = matchedTeamData.score + spread;
+      const adjustedScore = parseFloat(matchedTeamData.score) + spread;
       const otherTeamData = matchedData.scores.find(score => score.team !== winner);
 
+      if (otherTeamData) {
+        const otherTeamScore = parseFloat(otherTeamData.score);
+      
       if (adjustedScore > otherTeamData.score) {
         bet.betStatus = 'win';
-      } else if (adjustedScore === otherTeamData.score) {
+      } else if (adjustedScore == otherTeamData.score) {
         bet.betStatus = 'push';
       } else {
         bet.betStatus = 'loss';
       }
+    }
 
       return bet;
     }
@@ -39,7 +43,7 @@ function compareTotalBet(bet, jsonData) {
     const combinedScore = matchedData.scores.reduce((total, score) => total + parseInt(score.score), 0);
 
     if (bet.betType === 'overTotal') {
-      if (bet.total > combinedScore) {
+      if (bet.total < combinedScore) {
         bet.betStatus = 'win';
       } else if (bet.total === combinedScore) {
         bet.betStatus = 'push';
@@ -47,7 +51,7 @@ function compareTotalBet(bet, jsonData) {
         bet.betStatus = 'loss';
       }
     } else if (bet.betType === 'underTotal') {
-      if (combinedScore > bet.total) {
+      if (combinedScore < bet.total) {
         bet.betStatus = 'win';
       } else if (combinedScore === bet.total) {
         bet.betStatus = 'push';
@@ -113,4 +117,4 @@ async function checkAndUpdateBets() {
   }
 }
 
-module.exports = { checkAndUpdateBets };
+module.exports = { checkAndUpdateBets, compareTotalBet, compareSpreadBet };
