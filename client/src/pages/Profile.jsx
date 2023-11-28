@@ -182,7 +182,7 @@ const [betId, setBetId] = useState("");
           })}
         </div>
         <div className="flex items-center justify-center">
-  {user.betHistory?.length > (
+  {user.betHistory?.length > 0 && (
     <button className="gold-bg py-2 mt-2 px-4 rounded-xl royalBlue mybtn mb-7 font-bold text-xl shadow-xl w-80" onClick={() => handleRemoveAllBets()}>Remove All Bet History</button>
   )}
 </div>
