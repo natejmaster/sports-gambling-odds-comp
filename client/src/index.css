@@ -98,3 +98,44 @@
   color: #143189;
   text-shadow: 2px 2px 4px #f8d03e;
 }
+
+/* Style for the parent container */
+#parent-title {
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* Style for the main title */
+#buy-units-title {
+  font-size: 28px;
+  color: #333;
+}
+
+/* Style for the PaymentButtons component */
+.PaymentButtons {
+  margin-top: 20px;
+}
+
+.PaymentButtons h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.PaymentButtons button {
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.PaymentButtons button:hover {
+  background-color: #0056b3;
+}
+
+.PaymentButtons button:focus {
+  outline: none;
+}
