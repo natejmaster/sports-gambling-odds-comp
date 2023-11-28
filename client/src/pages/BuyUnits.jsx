@@ -10,6 +10,9 @@ export default function BuyUnits() {
     { price: 5, credits: 250 },
     { price: 10, credits: 550 },
     { price: 20, credits: 1250 },
+    { price: 30, credits: 2000},
+    { price: 40, credits: 2750},
+    { price: 50, credits: 3500}
   ];
 
   return (
@@ -34,4 +37,5 @@ export default function BuyUnits() {
     </div>
   );
 }
+
 
