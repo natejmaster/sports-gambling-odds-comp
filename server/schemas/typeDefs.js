@@ -53,6 +53,7 @@ type Query {
 }
 
   type Mutation {
+  removeBet(betId: ID!): Bet
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addBet(betType: String!, matchup: String!, spread: Float, winner: String, total: Float, endTime: Float!, betStatus: String, units: Int!): Bet

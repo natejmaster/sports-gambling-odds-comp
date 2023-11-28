@@ -75,6 +75,9 @@
 .tabs{
   background-color: #e9e4dc;
 }
+.cust-height{
+  height: 22rem;
+}
 .tabs:hover{
   background-color: #BD6B57;
 }

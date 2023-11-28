@@ -16,10 +16,10 @@ export default function LeaderBoard() {
 console.log(users);
     return (
        <>
-       <div className="flex flex-col  white-bg mx-5 mt-5 py-2 rounded-xl border-royalBlue  mb-8 justify-center">
+       <div className="flex flex-col  white-bg mx-5 mt-5 py-2 rounded-xl border-royalBlue  mb-32 justify-center">
             <h2 className="heading text-3xl text-center">Leaderboard</h2>
             <h3 className="heading text-3xl text-center">Top 10</h3>
-            <ol className="flex flex-col">
+            <ol className="flex flex-col list-decimal">
            {users.map((user) => {
                 return (
                     

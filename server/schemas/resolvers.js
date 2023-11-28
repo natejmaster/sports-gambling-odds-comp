@@ -44,7 +44,22 @@ Query: {
     
           return { token, user };
         },
-        
+        removeBet: async (parent, { betId }, context) => {if (context.user) {
+          try {
+            const bet = await Bet.findByIdAndDelete(betId);
+            if (!bet) {
+              throw new Error('No bet found with this id!');
+            }
+            return bet;
+          } catch (error) {
+            console.error("Error in removeBet resolver:", error);
+            throw error;
+          }
+        } else {
+          throw new AuthenticationError('You need to be logged in!');
+        }
+      },
+
         addBet: async (parent, { betType, matchup, spread, winner, total, endTime, betStatus, units }, context) => {
           try {
             if (context.user) {

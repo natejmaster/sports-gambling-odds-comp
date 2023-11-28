@@ -1,13 +1,16 @@
 import auth from "../utils/auth";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { REMOVE_BET } from "../utils/mutations";
+
 export default function Profile() {
   const username = auth.getProfile().data.username;
   const { loading, data, refetch } = useQuery(QUERY_ME);
   const user = data?.me || {};
   console.log(user);
-
+  const [removeBet] = useMutation(REMOVE_BET);
+const [betId, setBetId] = useState("");
   const getBetStatusClassName = (betStatus) => {
     switch (betStatus) {
       case "win":
@@ -21,6 +24,17 @@ export default function Profile() {
   useEffect(() => {
     refetch();
   }, []);
+  const handleRemoveBet = async (betId) => {
+    try {
+      const { data } = await removeBet({
+        variables: { betId },
+      });
+      console.log(data);
+      refetch();
+    } catch (e) {
+      console.error(e);
+    }
+  }
   return (
     <>
       <div className="flex flex-col  white-bg mx-5 mt-5 py-2 rounded-xl border-royalBlue  mb-8 justify-center">
@@ -85,7 +99,7 @@ export default function Profile() {
           {user.betHistory?.map((history) => {
             return (
               <div
-                className={`flex flex-col border-royalBlueTop justify-center items-center mx-5 h-80 lg:w-5/12 ${getBetStatusClassName(
+                className={`flex flex-col border-royalBlueTop justify-center items-center mx-5 cust-height lg:w-5/12 ${getBetStatusClassName(
                   history.betStatus
                 )}`}
               >
@@ -130,6 +144,7 @@ export default function Profile() {
                 ) : (
                   <p className="royalBlue font-bold">Push</p>
                 )}
+                <button className="gold-bg py-2 mt-2  px-4 rounded-xl royalBlue mybtn mb-7 font-bold text-xl shadow-xl" onClick={() => handleRemoveBet(history._id)}>Remove Bet</button>
               </div>
             );
           })}
