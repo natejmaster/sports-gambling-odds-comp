@@ -38,6 +38,22 @@ export const REMOVE_BET = gql`
     }
   }
 `;
+
+export const REMOVE_ALL_BETS = gql`
+  mutation removeAllBets {
+    removeAllBets {
+      _id
+      betType
+      matchup
+      spread
+      winner
+      total
+      endTime
+      betStatus
+      units
+    }
+  }
+`;
 export const ADD_BET = gql`
   mutation addBet(
     $betType: String!

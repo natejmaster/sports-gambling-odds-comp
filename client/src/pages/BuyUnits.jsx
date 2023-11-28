@@ -16,25 +16,26 @@ export default function BuyUnits() {
   ];
 
   return (
-    <div className="PaymentButtons">
-      <div className="centered-content">
-        <h1 className="payment-buttons-title">Feel Like Pressing Your Luck? Buy More Units!</h1>
-        <div className="payment-buttons-container">
-          <h2>Select a Payment Option:</h2>
-          <div className="payment-buttons">
+    <div className="flex flex-col  white-bg mx-5 mt-5 rounded-xl border-royalBlue mb-48 justify-center items-center">
+      
+        <h2 className="heading text-3xl text-center py-4">Feel Like Pressing Your Luck? Buy More Units!</h2>
+    
+          <p className='royalBlue font-bold text-xl py-2'>Select a Payment Option:</p>
+          <div className="flex flex-col lg:flex-row lg:flex-wrap justify-center items-center">
             {paymentOptions.map((option, index) => (
+              
               <button
                 key={index}
-                className="payment-button"
+                className="gold-bg py-2 mt-2  px-4 rounded-xl royalBlue mybtn mb-7 font-bold text-xl shadow-xl mx-2 w-60 "
                 onClick={() => handlePayment(option.price, option.credits)}
               >
-                {`Pay $${option.price} - ${option.credits} credits`}
+                {`Pay $${option.price} - ${option.credits} Units`}
               </button>
             ))}
           </div>
-        </div>
+        
       </div>
-    </div>
+
   );
 }
 
