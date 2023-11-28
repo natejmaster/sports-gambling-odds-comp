@@ -141,6 +141,39 @@ const startApolloServer = async () => {
     }
   });
 
+  app.get('/api/team-info', async (req, res) => {
+    try {
+      const teamInfos = [];
+  
+      for (let i = 1; i <= 34; i++) {
+        const teamData = await axios.get(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${i}`);
+        const team = teamData.data.team;
+  
+        // Check if logos exist and are an array before accessing 'find'
+        const logoLink = (Array.isArray(team.logos) && team.logos.length > 0)
+          ? team.logos.find(logo => logo.rel && logo.rel.includes('full'))?.href
+          : null;
+  
+        // Check if 'record' and 'items' exist before using 'find'
+        const totalRecordItem = team.record?.items?.find(item => item.type === 'total');
+        const recordSummary = totalRecordItem ? totalRecordItem.summary : 'N/A';
+  
+        const teamInfo = {
+          fullName: team.displayName,
+          logoLink: logoLink,
+          record: recordSummary,
+        };
+  
+        teamInfos.push(teamInfo);
+      }
+  
+      res.json(teamInfos);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+  
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/dist')));
     app.get('*', (req, res) => {
