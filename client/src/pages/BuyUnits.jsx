@@ -1,5 +1,5 @@
 import React from 'react';
-import '../index.css'; 
+import '../index.css';
 
 export default function BuyUnits() {
   const handlePayment = (price, credits) => {
@@ -13,10 +13,10 @@ export default function BuyUnits() {
   ];
 
   return (
-    <div id="parent-title">
-      <h1 id="buy-units-title">Feel Like Pressing Your Luck? Buy More Units!</h1>
+    <div id="parent-title" className="PaymentButtons">
+      <h1 id="buy-units-title" className="payment-buttons-title">Feel Like Pressing Your Luck? Buy More Units!</h1>
       <div className="payment-buttons-container">
-        <h2 className="payment-buttons-title">Select a Payment Option:</h2>
+        <h2>Select a Payment Option:</h2>
         <div className="payment-buttons">
           {paymentOptions.map((option, index) => (
             <button
