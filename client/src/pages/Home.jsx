@@ -13,20 +13,14 @@ export default function Home() {
         <div className="borderLeft-royalBlue  flex flex-col items-center justify-center shadow-xl">
           <h2 className="text-3xl heading">About Us</h2>
           <p className="py-4 px-5 flex items-center justify-center royalBlue text-justify">
-            Welcome to our one-stop destination for sports betting enthusiasts!
-            At our website, we've simplified the quest for the most favorable
-            odds across various casinos, offering you a streamlined and
-            comprehensive platform to enhance your sports betting experience.
-            Dive into a user-friendly interface that allows you to effortlessly
-            compare odds from different casinos, empowering you to make informed
-            decisions and maximize your potential returns. Whether you're into
-            football, basketball, or any other sport, our platform is designed
-            to provide you with a detailed overview of the odds landscape,
-            helping you find the best value for your bets. Elevate your sports
-            betting strategy with us, where precision meets passion, and the
-            thrill of the game is complemented by the strategic advantage of
-            optimal odds. Welcome to a world where your choices are informed,
-            and your victories are optimized.
+          Have you always wanted to take part in the exciting world of sports gambling, but didn't
+          have the disposable funds to bet the way you want? Maybe sports gambling isn't legal in your
+          state and you don't want to drive across state lines every time you want a make a game more exciting?
+          Then you better check out uBetr, a free-to-play online micro-sportsbook for the NFL that lets you bet on
+          up-to-date odds for upcoming NFL games and bet using an easy-to-manage virtual currency: units. Once you've
+          signed up, or logged in for our returning users, click on the 'Place Bets!' tab to get started with betting on
+          games! If you're wondering if you should check out this fun, stake-free way to gamble on NFL games and you're not
+          sure? Just trust us -- uBetr try it out!
           </p>
           {!Auth.loggedIn() && (
           <div className="flex flex-row">
