@@ -9,6 +9,16 @@ const typeDefs = `
     units: Int
 
   }
+type AllUsers {
+  _id: ID!
+  username: String!
+  email: String
+  password: String
+  activeBets: [Bet]
+  betHistory: [Bet]
+  units: Int
+}
+
   type Bet {
     _id: ID!
     betType: String
@@ -37,12 +47,13 @@ const typeDefs = `
   }
 type Query {
   me: User
-  users: [User]
   user(username: String!): User
+  users: [AllUsers]
 
 }
 
   type Mutation {
+  removeBet(betId: ID!): Bet
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addBet(betType: String!, matchup: String!, spread: Float, winner: String, total: Float, endTime: Float!, betStatus: String, units: Int!): Bet

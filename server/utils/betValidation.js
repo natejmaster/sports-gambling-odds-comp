@@ -2,9 +2,13 @@ const Bet = require('../models/Bet');
 const User = require('../models/User');
 const fetch = require('node-fetch');
 
+function normalizeMatchup(matchup) {
+  return matchup.replace('at', '@');
+}
+
 // Function to compare spread bets using provided data
 function compareSpreadBet(bet, jsonData) {
-  const matchedData = jsonData.find(data => data.matchup === bet.matchup);
+  const matchedData = jsonData.find(data => normalizeMatchup(data.matchup) === bet.matchup);
 
   if (matchedData) {
     const { winner, spread } = bet;
@@ -17,9 +21,9 @@ function compareSpreadBet(bet, jsonData) {
       if (otherTeamData) {
         const otherTeamScore = parseFloat(otherTeamData.score);
       
-      if (adjustedScore > otherTeamData.score) {
+      if (adjustedScore > otherTeamScore) {
         bet.betStatus = 'win';
-      } else if (adjustedScore == otherTeamData.score) {
+      } else if (adjustedScore == otherTeamScore) {
         bet.betStatus = 'push';
       } else {
         bet.betStatus = 'loss';
@@ -37,7 +41,7 @@ function compareSpreadBet(bet, jsonData) {
 
 // Function to compare overTotal and underTotal bets using provided data
 function compareTotalBet(bet, jsonData) {
-  const matchedData = jsonData.find(data => data.matchup === bet.matchup);
+  const matchedData = jsonData.find(data => normalizeMatchup(data.matchup) === bet.matchup);
 
   if (matchedData) {
     const combinedScore = matchedData.scores.reduce((total, score) => total + parseInt(score.score), 0);
