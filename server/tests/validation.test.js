@@ -14,7 +14,7 @@ describe('Bet Validation Functions', () => {
         test('Spread Bet Wins', () => {
           // Mock bet data for a winning spread bet
           const bet = {
-            matchup: "Green Bay Packers at Detroit Lions",
+            matchup: "Green Bay Packers @ Detroit Lions",
             winner: "Green Bay Packers",
             spread: 3, // Spread of 3 points
             betType: "spread"
@@ -27,7 +27,7 @@ describe('Bet Validation Functions', () => {
         test('Spread Bet Pushes', () => {
           // Mock bet data for a pushing spread bet
           const bet = {
-            matchup: "Green Bay Packers at Detroit Lions",
+            matchup: "Green Bay Packers @ Detroit Lions",
             winner: "Detroit Lions",
             spread: 7, // Spread of 7 points
             betType: "spread"
@@ -40,7 +40,7 @@ describe('Bet Validation Functions', () => {
         test('Spread Bet Loses', () => {
           // Mock bet data for a losing spread bet
           const bet = {
-            matchup: "Green Bay Packers at Detroit Lions",
+            matchup: "Green Bay Packers @ Detroit Lions",
             winner: "Detroit Lions",
             spread: 5, // Spread of 5 points
             betType: "spread"
@@ -55,7 +55,7 @@ describe('Bet Validation Functions', () => {
     test('OverTotal Bet Wins', () => {
       // Mock bet data for a winning overTotal bet
       const bet = {
-        matchup: "Miami Dolphins at New York Jets",
+        matchup: "Miami Dolphins @ New York Jets",
         total: 30,
         betType: "overTotal"
       };
@@ -67,7 +67,7 @@ describe('Bet Validation Functions', () => {
     test('OverTotal Bet Pushes', () => {
       // Mock bet data for a pushing overTotal bet
       const bet = {
-        matchup: "Buffalo Bills at Philadelphia Eagles",
+        matchup: "Buffalo Bills @ Philadelphia Eagles",
         total: 71,
         betType: "overTotal"
       };
@@ -79,7 +79,7 @@ describe('Bet Validation Functions', () => {
     test('OverTotal Bet Loses', () => {
       // Mock bet data for a losing overTotal bet
       const bet = {
-        matchup: "San Francisco 49ers at Seattle Seahawks",
+        matchup: "San Francisco 49ers @ Seattle Seahawks",
         total: 45,
         betType: "overTotal"
       };
@@ -91,7 +91,7 @@ describe('Bet Validation Functions', () => {
     test('UnderTotal Bet Wins', () => {
       // Mock bet data for a winning underTotal bet
       const bet = {
-        matchup: "Green Bay Packers at Detroit Lions",
+        matchup: "Green Bay Packers @ Detroit Lions",
         total: 52,
         betType: "underTotal"
       };
@@ -103,7 +103,7 @@ describe('Bet Validation Functions', () => {
     test('UnderTotal Bet Pushes', () => {
       // Mock bet data for a pushing underTotal bet
       const bet = {
-        matchup: "Washington Commanders at Dallas Cowboys",
+        matchup: "Washington Commanders @ Dallas Cowboys",
         total: 55,
         betType: "underTotal"
       };
@@ -115,7 +115,7 @@ describe('Bet Validation Functions', () => {
     test('UnderTotal Bet Loses', () => {
       // Mock bet data for a losing underTotal bet
       const bet = {
-        matchup: "Jacksonville Jaguars at Houston Texans",
+        matchup: "Jacksonville Jaguars @ Houston Texans",
         total: 40,
         betType: "underTotal"
       };
