@@ -13,6 +13,12 @@ Query: {
       }
       throw new AuthenticationError('Not logged in');
     },
+    users: async () => {
+      return User.find()
+        .select('-__v -password')
+        .populate('activeBets')
+        .populate('betHistory');
+    }
   },
 
     Mutation: {

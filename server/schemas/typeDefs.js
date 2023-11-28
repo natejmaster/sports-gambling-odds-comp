@@ -9,6 +9,16 @@ const typeDefs = `
     units: Int
 
   }
+type AllUsers {
+  _id: ID!
+  username: String!
+  email: String
+  password: String
+  activeBets: [Bet]
+  betHistory: [Bet]
+  units: Int
+}
+
   type Bet {
     _id: ID!
     betType: String
@@ -37,8 +47,8 @@ const typeDefs = `
   }
 type Query {
   me: User
-  users: [User]
   user(username: String!): User
+  users: [AllUsers]
 
 }
 

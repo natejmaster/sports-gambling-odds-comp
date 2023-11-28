@@ -34,6 +34,38 @@ export const QUERY_ME = gql`
   }
 `;
 
+export const QUERY_USERS = gql`
+  query users {
+    users {
+      _id
+      username
+      email
+      activeBets {
+        _id
+        betType
+        matchup
+        spread
+        winner
+        total
+        endTime
+        betStatus
+        units
+      }
+      betHistory {
+        _id
+        betType
+        matchup
+        spread
+        winner
+        total
+        endTime
+        betStatus
+        units
+      }
+      units
+    }
+  }
+`;
 
 
 
