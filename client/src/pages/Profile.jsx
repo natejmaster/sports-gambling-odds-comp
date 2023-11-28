@@ -8,7 +8,16 @@ export default function Profile() {
     const user = data?.me || {};
     console.log(user);
     
-
+    const getBetStatusClassName = (betStatus) => {
+        switch (betStatus) {
+          case "win":
+            return "bg-green-200";
+          case "loss":
+            return "bg-red-200";
+          default:
+            return "bg-gray-200";
+        }
+      };
     useEffect(() => {
         refetch();
     }
@@ -21,9 +30,9 @@ export default function Profile() {
         </div>
         <div className="flex flex-col  white-bg mx-5   rounded-xl border-royalBlue justify-center">
         {user.activeBets?.length ? (
-            <h3 className="heading text-3xl text-center">Active Bets</h3>
+            <h3 className="heading text-3xl text-center py-2">Active Bets</h3>
         ) : (
-            <h3 className="heading text-3xl text-center">No Current Active Bets</h3>
+            <h3 className="heading text-3xl text-center py-2">No Current Active Bets</h3>
         )}
                 <div className="flex flex-col lg:flex-row lg:flex-wrap justify-center items-center">
         {user.activeBets?.map((activeBet) => {
@@ -53,23 +62,23 @@ export default function Profile() {
         )}</div>
             </div>
       
-        <div className="flex flex-col  white-bg mx-5 mb-40 mt-4 rounded-xl border-royalBlue lg:flex-row  justify-center">
+        <div className="flex flex-col  white-bg mx-5 mb-40 mt-4 rounded-xl border-royalBlue justify-center">
         {user.betHistory?.length ? (
-            <h3 className="heading text-3xl text-center">Bet History</h3>
+            <h3 className="heading text-3xl text-center py-2">Bet History</h3>
         ) : (
-            <h3 className="heading text-3xl text-center">No Completed Bets</h3>
+            <h3 className="heading text-3xl text-center py-2">No Completed Bets</h3>
         )}
-
+ <div className="flex flex-col lg:flex-row lg:flex-wrap justify-center items-center">
         {user.betHistory?.map((history) => {
             return (
-                <div className="flex flex-col  white-bg mx-5  rounded-xl border-royalBlue lg:flex-row mb-8 justify-center">
-                    <h3 className="heading text-3xl text-center">Matchup</h3>
+                <div className={`flex flex-col border-royalBlueTop justify-center items-center mx-5 h-80 lg:w-5/12 ${getBetStatusClassName(history.betStatus)}`}>
+                    <h3 className="heading text-xl font-bold text-center">Matchup</h3>
                     <p className="royalBlue font-bold">{history.matchup}</p>
-                    <h3 className="heading text-3xl text-center">Bet Type</h3>
+                    <h3 className="heading text-xl font-bold text-center">Bet Type</h3>
                     {history.betType === "spread" ? (
                         <>
                         <p className="royalBlue font-bold">Spread {history.spread}</p>
-                        <h3 className="heading text-3xl text-center">Predicted Winner</h3>
+                        <h3 className="heading text-xl font-bold text-center">Predicted Winner</h3>
                         <p className="royalBlue font-bold">{history.winner}</p>
                         </>
                     ) : history.betType === "overTotal" ? (
@@ -77,14 +86,23 @@ export default function Profile() {
                     ) : (
                         <p className="royalBlue font-bold">Under Total</p>
                     )}
-                    <h3 className="heading text-3xl text-center">Amount Bet</h3>
+                    <h3 className="heading text-xl font-bold text-center">Amount Bet</h3>
                     <p className="royalBlue font-bold">{history.units}</p>
-                    <h3 className="heading text-3xl text-center">Result</h3>
-                    <p className="royalBlue font-bold">{history.result}</p>
+                    <h3 className="heading text-xl font-bold text-center">Result</h3>
+                    { 
+                        history.betStatus === "win" ? (
+                        <p className="royalBlue font-bold">Win</p>
+                    ) : history.betStatus === "loss" ? (
+                        <p className="royalBlue font-bold">Loss</p>
+                    ) : (
+                        <p className="royalBlue font-bold">Push</p>
+                    )}
+                   
                   
                 </div>
             )}
-        )}
+        )}</div>
+        
         </div>
 
 

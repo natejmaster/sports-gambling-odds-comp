@@ -8,8 +8,8 @@ export default function NavTab({ links, activeLink, onLinkClick }) {
                         <li
                             className={
                                 link.to === activeLink
-                                    ? "red-bg round-top-corners mx-1 px-3 lg:text-xl lg:mx-3 underline font-bold"
-                                    : "tabs round-top-corners mx-1 px-3   lg:text-xl lg:mx-3 underline font-bold"
+                                    ? "red-bg round-top-corners mx-1 px-3 text-xs md:text-md lg:text-xl lg:mx-3 underline font-bold"
+                                    : "tabs round-top-corners mx-1 px-3 text-xs md:text-md lg:text-xl lg:mx-3 underline font-bold"
                             }
                             key={link.key}
                         >
