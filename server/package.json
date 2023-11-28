@@ -5,7 +5,8 @@
     "main": "server.js",
     "scripts": {
         "start": "node server.js",
-        "watch": "nodemon server.js"
+        "watch": "nodemon server.js",
+        "test": "jest"
     },
     "author": "",
     "license": "ISC",
@@ -19,6 +20,7 @@
         "mongoose": "^7.0.2"
     },
     "devDependencies": {
+        "jest": "^29.7.0",
         "nodemon": "^2.0.6"
     }
 }
