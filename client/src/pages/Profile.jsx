@@ -99,7 +99,7 @@ const [betId, setBetId] = useState("");
           {user.betHistory?.map((history) => {
             return (
               <div
-                className={`flex flex-col border-royalBlueTop justify-center items-center mx-5 cust-height lg:w-5/12 ${getBetStatusClassName(
+                className={`flex flex-col border-royalBlueTop justify-cent/er items-center mx-5 cust-height w-10/12 lg:w-5/12 ${getBetStatusClassName(
                   history.betStatus
                 )}`}
               >
