@@ -79,7 +79,7 @@ async function checkAndUpdateBets() {
   try {
     const expiredBets = await Bet.find({
       endTime: { $lte: currentTime },
-      betStatus: 'loss'
+      betStatus: 'active'
     }).populate('user');
 
     const baseURL = process.env.NODE_ENV === 'production' ? 'https://rocky-hollows-26852-54ebc26e9935.herokuapp.com' : 'http://localhost:3001';
