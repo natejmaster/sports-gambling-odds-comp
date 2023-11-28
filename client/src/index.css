@@ -87,6 +87,14 @@
   }
 }
 
+#parent-title {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
 #buy-units-title {
   font-size: 2rem;
+  color: #143189;
+  text-shadow: 2px 2px 4px #f8d03e;
 }
