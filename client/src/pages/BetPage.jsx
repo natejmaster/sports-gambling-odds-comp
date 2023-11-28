@@ -66,10 +66,11 @@ const BetPage = () => {
       <td className="text-xs md:text-sm font-bold royalBlue">{matchup.matchup}</td>
       {/* Spread */}
       <td>
-        <div className="dropdown mb-4 flex ml-1">
+      <div className="dropdown mb-4 flex ml-1">
+        <div className=" tooltip mt-12 mb-7 w-full "data-tip="Click to place bets!">
           <button
             tabIndex={0}
-            className="gold-bg mt-12 md:px-2 h-16 rounded-xl royalBlue mybtn mb-7 shadow-xl w-full text-xs font-bold md:text-md"
+            className="gold-bg  md:px-2 h-16 rounded-xl royalBlue mybtn shadow-xl w-full text-xs font-bold md:text-md"
             data-matchup={matchup.matchup}
             data-winner={matchup.awayTeam.name}
             data-spread={parseFloat(matchup.awayTeam.pointSpread)}
@@ -83,6 +84,7 @@ const BetPage = () => {
                 : matchup.awayTeam.pointSpread
             }`}
           </button>
+          </div>
           <ul
             tabIndex={0}
             className="dropdown-content mt-12 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
@@ -103,9 +105,10 @@ const BetPage = () => {
       {/* Home Spread */}
       <td>
         <div className="dropdown mb-4 flex ml-1">
+        <div className=" tooltip mt-12 mb-7 w-full "data-tip="Click to place bets!">
           <button
             tabIndex={0}
-            className="gold-bg mt-12 md:px-2 h-16 rounded-xl royalBlue mybtn mb-7 shadow-xl w-full text-xs font-bold md:text-md"
+            className="gold-bg  md:px-2 h-16 rounded-xl royalBlue mybtn  shadow-xl w-full text-xs font-bold md:text-md"
             data-matchup={matchup.matchup}
             data-winner={matchup.homeTeam.name}
             data-spread={parseFloat(matchup.homeTeam.pointSpread)}
@@ -119,6 +122,7 @@ const BetPage = () => {
                 : matchup.homeTeam.pointSpread
             }`}
           </button>
+          </div>
           <ul
             tabIndex={0}
             className="dropdown-content mt-12 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
@@ -139,9 +143,10 @@ const BetPage = () => {
       {/* Over Total */}
       <td>
         <div className="dropdown mb-4 flex ml-1">
+          <div className="tooltip mt-12 mb-7 " data-tip="Click to place bets!">
           <button
             tabIndex={0}
-            className="gold-bg mt-12 md:px-2 h-16 rounded-xl royalBlue mybtn mb-7 shadow-xl w-full text-xs font-bold md:text-md"
+            className="gold-bg  md:px-2 h-16 rounded-xl royalBlue mybtn  shadow-xl w-full text-xs font-bold md:text-md"
             data-matchup={matchup.matchup}
             data-winner={null}
             data-spread={null}
@@ -149,6 +154,7 @@ const BetPage = () => {
             data-bettype="overTotal"
             data-endtime={matchup.endTime}
           >{`Over ${matchup.totalScore}`}</button>
+          </div>
           <ul
             tabIndex={0}
             className="dropdown-content mt-12 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
@@ -168,16 +174,17 @@ const BetPage = () => {
       {/* Under Total */}
       <td>
         <div className="dropdown mb-4 flex ml-1">
+        <div className=" tooltip mt-12 mb-7 w-full "data-tip="Click to place bets!">
           <button
             tabIndex={0}
-            className="gold-bg mt-12 md:px-2 h-16 rounded-xl royalBlue mybtn mb-7 shadow-xl w-full text-xs font-bold md:text-md"
+            className="gold-bg  md:px-2 h-16 rounded-xl royalBlue mybtn shadow-xl w-full text-xs font-bold md:text-md"
             data-matchup={matchup.matchup}
             data-winner={null}
             data-spread={null}
             data-total={matchup.totalScore}
             data-bettype="underTotal"
             data-endtime={matchup.endTime}
-          >{`Under ${matchup.totalScore}`}</button>
+          >{`Under ${matchup.totalScore}`}</button></div>
           <ul
             tabIndex={0}
             className="dropdown-content mt-12 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
@@ -199,7 +206,7 @@ const BetPage = () => {
 
   return (
     <div className="flex flex-col white-bg mt-4 mx-5 rounded-xl border-royalBlue shadow-xl items-center justify-center mb-80">
-      <h2 className="text-3xl heading">Matchups</h2>
+      <h2 className="text-3xl heading mt-4 mb-2">Matchups</h2>
 
 {loading && <div className="my-16 flex flex-row">
   <p className="heading text-3xl">Loading Matchups...</p>

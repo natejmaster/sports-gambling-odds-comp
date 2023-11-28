@@ -59,7 +59,23 @@ Query: {
           throw new AuthenticationError('You need to be logged in!');
         }
       },
-
+      removeAllBets: async (parent, args, context) => {
+        if (context.user) {
+          try {
+            const bets = await Bet.deleteMany({});
+            if (!bets) {
+              throw new Error('No bets found!');
+            }
+            return bets;
+          } catch (error) {
+            console.error("Error in removeAllBets resolver:", error);
+            throw error;
+          }
+        } else {
+          throw new AuthenticationError('You need to be logged in!');
+        }
+      },
+      
         addBet: async (parent, { betType, matchup, spread, winner, total, endTime, betStatus, units }, context) => {
           try {
             if (context.user) {
