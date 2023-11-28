@@ -17,9 +17,9 @@ function compareSpreadBet(bet, jsonData) {
       if (otherTeamData) {
         const otherTeamScore = parseFloat(otherTeamData.score);
       
-      if (adjustedScore > otherTeamData.score) {
+      if (adjustedScore > otherTeamScore) {
         bet.betStatus = 'win';
-      } else if (adjustedScore == otherTeamData.score) {
+      } else if (adjustedScore == otherTeamScore) {
         bet.betStatus = 'push';
       } else {
         bet.betStatus = 'loss';
