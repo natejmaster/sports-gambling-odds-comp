@@ -13,22 +13,25 @@ export default function BuyUnits() {
   ];
 
   return (
-    <div id="parent-title" className="PaymentButtons">
-      <h1 id="buy-units-title" className="payment-buttons-title">Feel Like Pressing Your Luck? Buy More Units!</h1>
-      <div className="payment-buttons-container">
-        <h2>Select a Payment Option:</h2>
-        <div className="payment-buttons">
-          {paymentOptions.map((option, index) => (
-            <button
-              key={index}
-              className="payment-button"
-              onClick={() => handlePayment(option.price, option.credits)}
-            >
-              {`Pay $${option.price} - ${option.credits} credits`}
-            </button>
-          ))}
+    <div className="PaymentButtons">
+      <div className="centered-content">
+        <h1 className="payment-buttons-title">Feel Like Pressing Your Luck? Buy More Units!</h1>
+        <div className="payment-buttons-container">
+          <h2>Select a Payment Option:</h2>
+          <div className="payment-buttons">
+            {paymentOptions.map((option, index) => (
+              <button
+                key={index}
+                className="payment-button"
+                onClick={() => handlePayment(option.price, option.credits)}
+              >
+                {`Pay $${option.price} - ${option.credits} credits`}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>
   );
 }
+
