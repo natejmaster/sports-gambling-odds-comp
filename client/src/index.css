@@ -86,3 +86,7 @@
     border-left: 4px double #050e44;
   }
 }
+
+#buy-units-title {
+  font-size: 2rem;
+}

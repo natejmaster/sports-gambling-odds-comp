@@ -1,7 +1,8 @@
+import '../index.css';
 export default function BuyUnits() {
     return (
         <div>
-            <h1>Buy Units</h1>
+            <h1 id="buy-units-title">Feel Like Pressing Your Luck? Buy More Units!</h1>
         </div>
     )
 }
