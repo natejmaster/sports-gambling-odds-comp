@@ -26,9 +26,9 @@ console.log(users);
                 return (
                     
                         <li key={user._id} className="flex flex-col justify-center items-center border-royalBlueTop ">
-                        <h4 className={username === user.username ? ("heading text-2xl font-bold text-center") : "text-xl font-bold text-center"}>
-                       <h5 className="heading text-2xl font-bold"> {index === 0 ? '1st' : (index === 1 ? '2nd' : (index === 2 ? '3rd' : (index >= 3 && index <= 10 ? `${index + 1}th` : '')))}</h5> {user.username}
-                        </h4>
+                        <h3 className={username === user.username ? ("heading text-2xl font-bold text-center") : "text-xl font-bold text-center"}>
+                       <h3 className="heading text-2xl font-bold"> {index === 0 ? '1st' : (index === 1 ? '2nd' : (index === 2 ? '3rd' : (index >= 3 && index <= 10 ? `${index + 1}th` : '')))}</h3> {user.username}
+                        </h3>
                         <p className="royalBlue font-bold">{user.units} units</p></li>
                      
                         

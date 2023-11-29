@@ -82,7 +82,7 @@ const [betId, setBetId] = useState("");
         <div className="flex flex-col lg:flex-row lg:flex-wrap justify-center items-center">
           {user.activeBets?.map((activeBet) => {
             return (
-              <div key={activeBet.matchup} className="flex flex-col border-royalBlueTop  justify-center items-center mx-5 h-60 lg:w-5/12 ">
+              <div className="flex flex-col border-royalBlueTop  justify-center items-center mx-5 h-60 lg:w-5/12 ">
                 <h3 className="heading text-xl font-bold text-center">
                   Matchup
                 </h3>
@@ -127,7 +127,6 @@ const [betId, setBetId] = useState("");
           {user.betHistory?.map((history) => {
             return (
               <div
-                key={history.matchup}
                 className={`flex flex-col border-royalBlueTop justify-cent/er items-center mx-5 cust-height w-full lg:w-5/12 ${getBetStatusClassName(
                   history.betStatus
                 )}`}
