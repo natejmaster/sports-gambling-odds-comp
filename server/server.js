@@ -145,24 +145,60 @@ const startApolloServer = async () => {
     try {
       const teamInfos = [];
   
+      const excludedTeams = [31,32];
+  
       for (let i = 1; i <= 34; i++) {
+        if (excludedTeams.includes(i)) {
+          continue; // Skip conference teams
+        }
+  
         const teamData = await axios.get(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${i}`);
         const team = teamData.data.team;
   
-        // Check if logos exist and are an array before accessing 'find'
         const logoLink = (Array.isArray(team.logos) && team.logos.length > 0)
           ? team.logos.find(logo => logo.rel && logo.rel.includes('full'))?.href
           : null;
   
-        // Check if 'record' and 'items' exist before using 'find'
         const totalRecordItem = team.record?.items?.find(item => item.type === 'total');
         const recordSummary = totalRecordItem ? totalRecordItem.summary : 'N/A';
   
         const teamInfo = {
+          id: i,
           fullName: team.displayName,
           logoLink: logoLink,
           record: recordSummary,
         };
+  
+        try {
+          const teamStatsData = await axios.get(`https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2/teams/${i}/statistics?lang=en&region=us`);
+          const teamStats = teamStatsData.data;
+          console.log(teamStats);
+  
+          const pointsPerGame = teamStats.find(stat => stat.name === 'totalPointsPerGame');
+          const pointsAgainstPerGame = teamStats.find(stat => stat.name === 'totalPointsAgainstPerGame');
+          const rushingYardsPerGame = teamStats.find(stat => stat.name === 'rushingYardsPerGame');
+          const rushingYardsAgainstPerGame = teamStats.find(stat => stat.name === 'rushingYardsAgainstPerGame');
+          const passingYardsPerGame = teamStats.find(stat => stat.name === 'passingYardsPerGame');
+          const passingYardsAgainstPerGame = teamStats.find(stat => stat.name === 'passingYardsAgainstPerGame');
+  
+          // Add these specific statistics to the teamInfo object
+          teamInfo.pointsPerGame = pointsPerGame ? pointsPerGame.value : 'N/A';
+          teamInfo.pointsAgainstPerGame = pointsAgainstPerGame ? pointsAgainstPerGame.value : 'N/A';
+          teamInfo.rushingYardsPerGame = rushingYardsPerGame ? rushingYardsPerGame.value : 'N/A';
+          teamInfo.rushingYardsAgainstPerGame = rushingYardsAgainstPerGame ? rushingYardsAgainstPerGame.value : 'N/A';
+          teamInfo.passingYardsPerGame = passingYardsPerGame ? passingYardsPerGame.value : 'N/A';
+          teamInfo.passingYardsAgainstPerGame = passingYardsAgainstPerGame ? passingYardsAgainstPerGame.value : 'N/A';
+  
+        } catch (error) {
+          console.error(`Error fetching statistics for team ${i}:`, error);
+          // Set default value for statistics in case of error
+          teamInfo.pointsPerGame = 'N/A';
+          teamInfo.pointsAgainstPerGame = 'N/A';
+          teamInfo.rushingYardsPerGame = 'N/A';
+          teamInfo.rushingYardsAgainstPerGame = 'N/A';
+          teamInfo.passingYardsPerGame = 'N/A';
+          teamInfo.passingYardsAgainstPerGame = 'N/A';
+        }
   
         teamInfos.push(teamInfo);
       }
@@ -173,6 +209,7 @@ const startApolloServer = async () => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
+  
   
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/dist')));
