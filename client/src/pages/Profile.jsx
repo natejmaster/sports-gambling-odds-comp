@@ -127,7 +127,7 @@ const [betId, setBetId] = useState("");
           {user.betHistory?.map((history) => {
             return (
               <div
-              key={activeBet.matchup}
+              key={history.matchup}
                 className={`flex flex-col border-royalBlueTop justify-cent/er items-center mx-5 cust-height w-full lg:w-5/12 ${getBetStatusClassName(
                   history.betStatus
                 )}`}
