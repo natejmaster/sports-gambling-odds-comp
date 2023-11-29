@@ -141,6 +141,69 @@ const startApolloServer = async () => {
     }
   });
 
+  app.get('/api/team-info', async (req, res) => {
+    try {
+      const teamInfos = [];
+  
+      const excludedTeams = [31,32];
+  
+      for (let i = 1; i <= 34; i++) {
+        if (excludedTeams.includes(i)) {
+          continue; // Skip conference teams
+        }
+  
+        const teamData = await axios.get(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${i}`);
+        const team = teamData.data.team;
+  
+        const logoLink = (Array.isArray(team.logos) && team.logos.length > 0)
+          ? team.logos.find(logo => logo.rel && logo.rel.includes('full'))?.href
+          : null;
+  
+        const totalRecordItem = team.record?.items?.find(item => item.type === 'total');
+        const recordSummary = totalRecordItem ? totalRecordItem.summary : 'N/A';
+  
+        const teamInfo = {
+          id: i,
+          fullName: team.displayName,
+          logoLink: logoLink,
+          record: recordSummary,
+        };
+  
+        try {
+          const teamStatsData = await axios.get(`https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2/teams/${i}/statistics?lang=en&region=us`);
+          const teamStats = teamStatsData.data;
+    
+          const categories = teamStats.splits.categories;
+    
+          // Extracting passing, rushing, and scoring stats
+          const passingYardsPerGame = categories[1].stats.find(stat => stat.name === 'passingYardsPerGame');
+          const rushingYardsPerGame = categories[2].stats.find(stat => stat.name === 'rushingYardsPerGame');
+          const totalPointsPerGame = categories[9].stats.find(stat => stat.name === 'totalPointsPerGame');
+    
+          // Add these specific statistics to the teamInfo object and round to the nearest tenth
+          teamInfo.passingYardsPerGame = passingYardsPerGame ? parseFloat(passingYardsPerGame.value).toFixed(1) : 'N/A';
+          teamInfo.rushingYardsPerGame = rushingYardsPerGame ? parseFloat(rushingYardsPerGame.value).toFixed(1) : 'N/A';
+          teamInfo.pointsPerGame = totalPointsPerGame ? parseFloat(totalPointsPerGame.value).toFixed(1) : 'N/A';
+    
+        } catch (error) {
+          console.error(`Error fetching statistics for team ${i}:`, error);
+          // Set default value for statistics in case of error
+          teamInfo.passingYardsPerGame = 'N/A';
+          teamInfo.rushingYardsPerGame = 'N/A';
+          teamInfo.pointsPerGame = 'N/A';
+        }
+    
+        teamInfos.push(teamInfo);
+      }
+  
+      res.json(teamInfos);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+  
+  
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/dist')));
     app.get('*', (req, res) => {
