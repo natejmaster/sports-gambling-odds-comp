@@ -172,34 +172,27 @@ const startApolloServer = async () => {
         try {
           const teamStatsData = await axios.get(`https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2/teams/${i}/statistics?lang=en&region=us`);
           const teamStats = teamStatsData.data;
-          console.log(teamStats);
-  
-          const pointsPerGame = teamStats.find(stat => stat.name === 'totalPointsPerGame');
-          const pointsAgainstPerGame = teamStats.find(stat => stat.name === 'totalPointsAgainstPerGame');
-          const rushingYardsPerGame = teamStats.find(stat => stat.name === 'rushingYardsPerGame');
-          const rushingYardsAgainstPerGame = teamStats.find(stat => stat.name === 'rushingYardsAgainstPerGame');
-          const passingYardsPerGame = teamStats.find(stat => stat.name === 'passingYardsPerGame');
-          const passingYardsAgainstPerGame = teamStats.find(stat => stat.name === 'passingYardsAgainstPerGame');
-  
-          // Add these specific statistics to the teamInfo object
-          teamInfo.pointsPerGame = pointsPerGame ? pointsPerGame.value : 'N/A';
-          teamInfo.pointsAgainstPerGame = pointsAgainstPerGame ? pointsAgainstPerGame.value : 'N/A';
-          teamInfo.rushingYardsPerGame = rushingYardsPerGame ? rushingYardsPerGame.value : 'N/A';
-          teamInfo.rushingYardsAgainstPerGame = rushingYardsAgainstPerGame ? rushingYardsAgainstPerGame.value : 'N/A';
-          teamInfo.passingYardsPerGame = passingYardsPerGame ? passingYardsPerGame.value : 'N/A';
-          teamInfo.passingYardsAgainstPerGame = passingYardsAgainstPerGame ? passingYardsAgainstPerGame.value : 'N/A';
-  
+    
+          const categories = teamStats.splits.categories;
+    
+          // Extracting passing, rushing, and scoring stats
+          const passingYardsPerGame = categories[1].stats.find(stat => stat.name === 'passingYardsPerGame');
+          const rushingYardsPerGame = categories[2].stats.find(stat => stat.name === 'rushingYardsPerGame');
+          const totalPointsPerGame = categories[9].stats.find(stat => stat.name === 'totalPointsPerGame');
+    
+          // Add these specific statistics to the teamInfo object and round to the nearest tenth
+          teamInfo.passingYardsPerGame = passingYardsPerGame ? parseFloat(passingYardsPerGame.value).toFixed(1) : 'N/A';
+          teamInfo.rushingYardsPerGame = rushingYardsPerGame ? parseFloat(rushingYardsPerGame.value).toFixed(1) : 'N/A';
+          teamInfo.pointsPerGame = totalPointsPerGame ? parseFloat(totalPointsPerGame.value).toFixed(1) : 'N/A';
+    
         } catch (error) {
           console.error(`Error fetching statistics for team ${i}:`, error);
           // Set default value for statistics in case of error
-          teamInfo.pointsPerGame = 'N/A';
-          teamInfo.pointsAgainstPerGame = 'N/A';
-          teamInfo.rushingYardsPerGame = 'N/A';
-          teamInfo.rushingYardsAgainstPerGame = 'N/A';
           teamInfo.passingYardsPerGame = 'N/A';
-          teamInfo.passingYardsAgainstPerGame = 'N/A';
+          teamInfo.rushingYardsPerGame = 'N/A';
+          teamInfo.pointsPerGame = 'N/A';
         }
-  
+    
         teamInfos.push(teamInfo);
       }
   
