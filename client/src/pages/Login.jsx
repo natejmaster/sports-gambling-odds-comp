@@ -15,7 +15,6 @@ function Login(props) {
         variables: { email: formState.email, password: formState.password },
       });
       const token = mutationResponse.data.login.token;
-      console.log(token);
       if (token) {
         // Show a SweetAlert on successful login
         Swal.fire({

@@ -22,7 +22,7 @@ export default function Footer() {
           </a>
           <a
             className="linkGold text-xl underline"
-            href="https://jackstendeback.com"
+            href="https://elaborate-begonia-0a9032.netlify.app/"
             target="_blank"
           >
             Jack Stendeback

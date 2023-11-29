@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 // GraphQL queries
 export const QUERY_ME = gql`
@@ -66,9 +66,3 @@ export const QUERY_USERS = gql`
     }
   }
 `;
-
-
-
-
-
-
