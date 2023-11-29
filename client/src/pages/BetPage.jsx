@@ -9,14 +9,12 @@ const BetPage = () => {
   const [matchups, setMatchups] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const API_URL = process.env.NODE_ENV === 'production'
-  ? 'https://rocky-hollows-26852-54ebc26e9935.herokuapp.com/api/simplified-bovada-data'
-  : 'http://localhost:3001/api/simplified-bovada-data';
+  const baseURL = process.env.NODE_ENV === 'production' ? 'https://rocky-hollows-26852-54ebc26e9935.herokuapp.com' : 'http://localhost:3001';
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(API_URL);
+        const response = await axios.get(`${baseURL}/api/simplified-bovada-data`);
         setMatchups(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -26,7 +24,7 @@ const BetPage = () => {
     };
 
     fetchData();
-  }, [API_URL]);
+  }, []);
 
   const [addBet, { data, error }] = useMutation(ADD_BET);
 
