@@ -29,9 +29,7 @@ function Signup(props) {
       });
 
       // Log the updated form state after the mutation has been completed
-      console.log(formState);
 
-      console.log(data);
       if (data && data.addUser) {
         // Show a SweetAlert on successful login
         Swal.fire({

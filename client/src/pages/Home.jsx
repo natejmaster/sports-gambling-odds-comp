@@ -12,7 +12,7 @@ export default function Home() {
         />
         <div className="borderLeft-royalBlue  flex flex-col items-center justify-center shadow-xl">
           <h2 className="text-3xl heading">About Us</h2>
-          <p className="py-4 px-5 flex items-center justify-center royalBlue text-justify">
+          <p className="py-4 px-5 royalBlue text-justify lg:text-lg">
           Have you always wanted to take part in the exciting world of sports gambling, but didn't
           have the disposable funds to bet the way you want? Maybe sports gambling isn't legal in your
           state and you don't want to drive across state lines every time you want a make a game more exciting?
@@ -20,7 +20,7 @@ export default function Home() {
           up-to-date odds for upcoming NFL games and bet using an easy-to-manage virtual currency: units. Once you've
           signed up, or logged in for our returning users, click on the 'Place Bets!' tab to get started with betting on
           games! If you're wondering if you should check out this fun, stake-free way to gamble on NFL games and you're not
-          sure? Just trust us -- uBetr try it out!
+          sure? Just trust us -- <span className="heading font-bold">uBetr</span> try it out!
           </p>
           {!Auth.loggedIn() && (
           <div className="flex flex-row">

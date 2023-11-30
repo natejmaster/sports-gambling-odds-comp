@@ -9,9 +9,11 @@
 .gold {
   color: #f8d03e;
 }
+
 .red-bg {
-  background-color: #BD6B57;
+  background-color: #bd6b57;
 }
+
 .royalBlue {
   color: #050e44;
 }
@@ -39,10 +41,11 @@
 .border-royalBlue {
   border: 4px solid #050e44;
 }
+
 .border-royalBlueTop {
   border-top: 1px solid #050e44;
-
 }
+
 .borderLeft-royalBlue {
   border-left: none;
 }
@@ -71,22 +74,26 @@
 .linkGold:hover {
   color: #c39132;
 }
+
 .round-top-corners {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-} 
-.tabs{
+}
+
+.tabs {
   background-color: #e9e4dc;
 }
-.cust-height{
+
+.cust-height {
   height: 22rem;
 }
-.tabs:hover{
-  background-color: #BD6B57;
+
+.tabs:hover {
+  background-color: #bd6b57;
 }
+
 @media (min-width: 1024px) {
   .borderLeft-royalBlue {
     border-left: 4px double #050e44;
   }
 }
-

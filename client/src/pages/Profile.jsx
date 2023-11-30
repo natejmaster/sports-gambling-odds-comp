@@ -10,10 +10,9 @@ export default function Profile() {
   const username = auth.getProfile().data.username;
   const { loading, data, refetch } = useQuery(QUERY_ME);
   const user = data?.me || {};
-  console.log(user);
   const [removeAllBets] = useMutation(REMOVE_ALL_BETS);
   const [removeBet] = useMutation(REMOVE_BET);
-const [betId, setBetId] = useState("");
+  const [betId, setBetId] = useState("");
   const getBetStatusClassName = (betStatus) => {
     switch (betStatus) {
       case "win":
@@ -32,36 +31,34 @@ const [betId, setBetId] = useState("");
       const { data } = await removeBet({
         variables: { betId },
       });
-      console.log(data);
       refetch();
     } catch (e) {
       console.error(e);
     }
-  }
+  };
   const handleRemoveAllBets = async () => {
-   Swal.fire({
-      title: 'Delete All Bet History?',
+    Swal.fire({
+      title: "Delete All Bet History?",
       html: `This cannot be undone.`,
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No',
-      confirmButtonColor: '#050e44',
-      cancelButtonColor: '#BD6B57',
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+      confirmButtonColor: "#050e44",
+      cancelButtonColor: "#BD6B57",
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
-          title: 'Bet History Deleted!',
-          icon: 'success',
-          confirmButtonColor: '#050e44',
+          title: "Bet History Deleted!",
+          icon: "success",
+          confirmButtonColor: "#050e44",
         }).then(() => {
           removeAllBets();
           refetch();
         });
       }
-    }
-    )
-  }
+    });
+  };
 
   return (
     <>
@@ -73,7 +70,7 @@ const [betId, setBetId] = useState("");
       </div>
       <div className="flex flex-col  white-bg mx-5   rounded-xl border-royalBlue justify-center">
         {user.activeBets?.length ? (
-          <h3 className="heading text-3xl text-center py-2">Active Bets</h3>  
+          <h3 className="heading text-3xl text-center py-2">Active Bets</h3>
         ) : (
           <h3 className="heading text-3xl text-center py-2">
             No Current Active Bets
@@ -82,7 +79,10 @@ const [betId, setBetId] = useState("");
         <div className="flex flex-col lg:flex-row lg:flex-wrap justify-center items-center">
           {user.activeBets?.map((activeBet) => {
             return (
-              <div key={activeBet.matchup} className="flex flex-col border-royalBlueTop  justify-center items-center mx-5 h-60 lg:w-5/12 ">
+              <div
+                key={activeBet.matchup}
+                className="flex flex-col border-royalBlueTop  justify-center items-center mx-5 h-60 lg:w-5/12 "
+              >
                 <h3 className="heading text-xl font-bold text-center">
                   Matchup
                 </h3>
@@ -127,7 +127,7 @@ const [betId, setBetId] = useState("");
           {user.betHistory?.map((history) => {
             return (
               <div
-              key={history.matchup}
+                key={history.matchup}
                 className={`flex flex-col border-royalBlueTop justify-cent/er items-center mx-5 cust-height w-full lg:w-5/12 ${getBetStatusClassName(
                   history.betStatus
                 )}`}
@@ -162,7 +162,8 @@ const [betId, setBetId] = useState("");
                   {history.betStatus === "loss"
                     ? 0
                     : history.betStatus === "push"
-                    ? history.units : history.units*2}
+                    ? history.units
+                    : history.units * 2}
                 </p>
                 <h3 className="heading text-xl font-bold text-center">
                   Result
@@ -175,20 +176,28 @@ const [betId, setBetId] = useState("");
                   <p className="royalBlue font-bold">Push</p>
                 )}
                 {history && (
-                <button className="gold-bg py-2 mt-2  px-4 rounded-xl royalBlue mybtn mb-7 font-bold text-xl shadow-xl" onClick={() => handleRemoveBet(history._id)}>Remove Bet</button> )}
+                  <button
+                    className="gold-bg py-2 mt-2  px-4 rounded-xl royalBlue mybtn mb-7 font-bold text-xl shadow-xl"
+                    onClick={() => handleRemoveBet(history._id)}
+                  >
+                    Remove Bet
+                  </button>
+                )}
               </div>
-              
             );
-            
           })}
         </div>
         <div className="flex items-center justify-center">
-  {user.betHistory?.length > 0 && (
-    <button className="gold-bg py-2 mt-2 px-4 rounded-xl royalBlue mybtn mb-7 font-bold text-xl shadow-xl w-80" onClick={() => handleRemoveAllBets()}>Remove All Bet History</button>
-  )}
-</div>
+          {user.betHistory?.length > 0 && (
+            <button
+              className="gold-bg py-2 mt-2 px-4 rounded-xl royalBlue mybtn mb-7 font-bold text-xl shadow-xl w-80"
+              onClick={() => handleRemoveAllBets()}
+            >
+              Remove All Bet History
+            </button>
+          )}
+        </div>
       </div>
-      
     </>
   );
 }
